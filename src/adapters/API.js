@@ -5,6 +5,7 @@ const BASE_URL = 'http://localhost:3000'
 const USERS_URL = `${BASE_URL}/users`
 const MATCHES_URL = `${BASE_URL}/matches`
 const RELATIONSHIPS_URL = `${BASE_URL}/relationships`
+const LOGIN_URL = `${BASE_URL}/login`
 
 const fetchData = (url = '', data = {}, method) => {
   return fetch(url, {
@@ -55,6 +56,16 @@ const createFollow = (user1, user2) => {
     followed_id: user2.id
   }
   return fetchData(RELATIONSHIPS_URL, rel, 'POST')
+    .then(res => res.json())
+}
+
+const loginUser = (user) => {
+  const u = {
+    username: user.username,
+    password: user.password
+  }
+  return fetchData(`${LOGIN_URL}`, u, 'POST')
+    .then(res => res.json())
 }
 
 export default {
@@ -64,5 +75,6 @@ export default {
   updateUser,
   createMatch,
   updateMatch,
-  createFollow
+  createFollow,
+  loginUser
 }
