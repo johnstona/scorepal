@@ -9,7 +9,7 @@ import API from './adapters/API'
 import Home from './containers/home/Home'
 
 function App () {
-  const [currentUser, newUser] = useState({})
+  const [currentUser, newUser] = useState()
 
   const login = (user, history) => {
     API.loginUser(user)
