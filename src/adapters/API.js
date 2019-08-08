@@ -68,6 +68,11 @@ const loginUser = (user) => {
     .then(res => res.json())
 }
 
+const getUserMatches = (id) => {
+  return fetch(`${USERS_URL}/${id}/matches`)
+    .then(res => res.json())
+}
+
 export default {
   createSubscription,
   getAllUsers,
@@ -76,5 +81,6 @@ export default {
   createMatch,
   updateMatch,
   createFollow,
-  loginUser
+  loginUser,
+  getUserMatches
 }
