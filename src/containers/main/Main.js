@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom'
 
 const Main = () => {
   return <>
-          <Welcome />
-          <Button to='/login' as={Link} exact>Login</Button>
-          <Button to='/signup' as={Link} exact>Signup</Button>
+    <Welcome />
+    <Button to='/login' as={Link} >Login</Button>
+    <Button to='/signup' as={Link} >Signup</Button>
         </>
 }
 

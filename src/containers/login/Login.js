@@ -1,11 +1,10 @@
-import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Icon, Message, Segment } from 'semantic-ui-react'
 import React from 'react'
 import { useForm } from '../../Hooks'
 
-const Login = ({ history, loginUser }) => {
+const LoginForm = ({ history, loginUser }) => {
   const login = () => {
-    loginUser(input)
-    history.push('/home')
+    loginUser(input, history)
   }
 
   const initialValues = {
@@ -16,10 +15,10 @@ const Login = ({ history, loginUser }) => {
   const { input, handleChange, handleSubmit } = useForm(login, initialValues)
 
   return <>
-    <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+    <Grid textAlign='center' style={{ height: '80vh' }} verticalAlign='middle'>
       <Grid.Column style={{ maxWidth: 450 }}>
-        <Header as='h2' color='teal' textAlign='center'>
-          <Image src='/logo.png' /> Log-in to your account
+        <Header as='h2' color='green' textAlign='center'>
+          <Icon className='futbol ball' /> Log-in to your account
         </Header>
         <Form size='large'>
           <Segment stacked>
@@ -35,7 +34,7 @@ const Login = ({ history, loginUser }) => {
               type='password'
             />
 
-            <Button onClick={handleSubmit} color='teal' fluid size='large'>
+            <Button onClick={handleSubmit} color='green' fluid size='large'>
             Login
             </Button>
           </Segment>
@@ -48,4 +47,4 @@ const Login = ({ history, loginUser }) => {
   </>
 }
 
-export default Login
+export default LoginForm
