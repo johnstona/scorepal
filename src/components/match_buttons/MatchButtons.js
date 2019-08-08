@@ -2,13 +2,13 @@ import React from 'react'
 import { Button, Container } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
-const HomeButtons = () => {
+const MatchButtons = () => {
   return <Container textAlign='center'>
     <Button.Group vertical>
-      <Button to='/matches' as={Link} color='orange'>Matches</Button>
-      <Button to='/social' as={Link} color='pink'>Social</Button>
+      <Button to='/matches/new' as={Link} color='orange'>New Match!</Button>
+      <Button to='/matches/all' as={Link} color='pink'>Match History</Button>
     </Button.Group>
   </Container>
 }
 
-export default HomeButtons
+export default MatchButtons
