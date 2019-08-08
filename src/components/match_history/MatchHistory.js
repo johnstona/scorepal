@@ -1,7 +1,5 @@
 import React from 'react'
 
-const MatchHistory = () => {
- return <div>Match History</div>
-}
+const MatchHistory = ({matches}) => <div>Match History</div>
 
 export default MatchHistory

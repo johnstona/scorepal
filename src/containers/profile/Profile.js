@@ -5,9 +5,6 @@ import HomeButtons from '../../components/home_buttons/HomeButtons'
 
 const Profile = ({ currentUser }) => {
   return <Container textAlign='center'>
-      <Header as='h3' inverted color='green' textAlign='center'>
-      HOME
-      </Header>
     <Card centered>
       <Image src={images[`${currentUser.avatar}.png`]} size='small' circular centered />
       <Card.Content>
@@ -15,9 +12,7 @@ const Profile = ({ currentUser }) => {
       </Card.Content>
     </Card>
     <Divider />
-    <HomeButtons />
   </Container>
-  
 }
 
 const images = importAll(require.context('../../assets/images', false, /\.(png|jpe?g|svg)$/))
