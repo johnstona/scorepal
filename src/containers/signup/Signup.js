@@ -7,12 +7,14 @@ const SignupForm = ({ history, signupUser }) => {
     signupUser(input, history)
   }
 
+  const randomAvatar = Math.floor((Math.random() * 10) + 1)
+
   const initialValues = {
     username: '',
     name: '',
     password: '',
     confirmPassword: '',
-    avatar: ''
+    avatar: randomAvatar
   }
 
   const { input, handleChange, handleSubmit } = useForm(signup, initialValues)
