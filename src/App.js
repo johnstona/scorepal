@@ -11,6 +11,7 @@ import Match from './containers/match/Match'
 import Social from './containers/social/Social'
 import NewMatch from './components/new_match/NewMatch'
 import MatchHistory from './components/match_history/MatchHistory'
+import Global from './Global'
 
 class App extends React.Component {
   state = {
@@ -61,6 +62,8 @@ class App extends React.Component {
   }
 
   render() {
+    Global.setState(this.state.currentUser)
+    console.log(Global.state)
 
   return (
 
