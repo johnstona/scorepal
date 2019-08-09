@@ -11,20 +11,24 @@ import Match from './containers/match/Match'
 import Social from './containers/social/Social'
 import NewMatch from './components/new_match/NewMatch'
 import MatchHistory from './components/match_history/MatchHistory'
-import Global from './Global'
+import Loading from './components/Loading/Loading'
+import LiveMatch from './components/live_match/LiveMatch';
 
 class App extends React.Component {
   state = {
-    currentUser: {id: 2,
-    username: "36Arsenal",
-    name: "Mohammed Salah",
-    password: "password",
-    avatar: 3},
+    currentUser: {
+      "id": 9,
+      "username": "Benfica834",
+      "name": "Paul Pogba",
+      "password": "password",
+      "avatar": "13"
+    },
     followers: [],
     following: [],
     liveMatches: [],
     userMatches: [],
-    users: []
+    users: [],
+    userLiveMatch: {}
 }
 
   componentDidMount() {
@@ -61,23 +65,41 @@ class App extends React.Component {
     .then(following => this.setState({following}))
   }
 
+  createMatch = (match, history) => {
+    API.createMatch(match, this.state.currentUser.id)
+    .then(userLiveMatch => {
+      this.setState({userLiveMatch})
+      history.push(`/matches/live/${userLiveMatch.id}`)
+    }
+      )
+  }
+
+  matchOpponent = (match) => match.opponent_id ? this.state.users.filter(user => user.id === match.opponent_id) : match.opponent_name
+  matchUser = (match) => this.state.users.filter(user => user.id === match.user_id)
+
   render() {
-    Global.setState(this.state.currentUser)
-    console.log(Global.state)
+
+    const LazyComponent = (condition, component) => condition ? component : <Loading />
+    const currentUser = this.state.currentUser
+    const matchOpponents = this.state.userMatches.map(match => this.matchOpponent(match))
+    const matchUsers = this.state.userMatches.map(match => this.matchUser(match))
+    const userMatches = this.state.userMatches
+    const userLiveMatch = this.state.userLiveMatch
 
   return (
 
     <div>
       <BrowserRouter>
         <NavBar />
-        <Route exact path='/' render={() => <Main user={this.state.currentUser} />} />
+        <Route exact path='/' render={() => <Main user={currentUser} />} />
         <Route exact path='/signup' render={props => <Signup {...props} signupUser={this.signup} />} />
         <Route exact path='/login' render={props => <Login {...props} loginUser={this.login} />} />
-        <Route exact path='/home' render={props => <Home {...props} currentUser={this.state.currentUser || ''} />} />
-        <Route exact path='/matches' render={props => <Match {...props} currentUser={this.state.currentUser} />} />
+        <Route exact path='/home' render={props => LazyComponent(currentUser, <Home {...props} currentUser={currentUser} />)} />
+        <Route exact path='/matches' render={props => <Match {...props} currentUser={currentUser} createMatch={this.createMatch}/>} />
         <Route exact path='/social' render={props => <Social {...props} />} />
-        <Route exact path='/matches/new' render={props => <NewMatch {...props} />} />
-        <Route exact path='/matches/all' render={props => <MatchHistory {...props} matches={this.state.userMatches}/>} />
+        <Route exact path='/matches/new' render={props => <NewMatch {...props} match={userLiveMatch} createMatch={this.createMatch}/> } />        
+        <Route exact path='/matches/all' render={props => LazyComponent(userMatches, <MatchHistory {...props} matches={this.state.userMatches} matchUsers={matchUsers} matchOpponents={matchOpponents}/>)} />
+        <Route exact path='/matches/live/:id' render={props => <LiveMatch {...props} matches={this.state.liveMatches} userLiveMatch={userLiveMatch} currentUser={currentUser} /> } />
       </BrowserRouter>
     </div>
   )

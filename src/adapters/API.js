@@ -40,7 +40,11 @@ const updateUser = (user) => {
     .then(res => res.json())
 }
 
-const createMatch = (match) => {
+const createMatch = (newMatch, id) => {
+  const match = {
+    ...newMatch,
+    user_id: id
+  }
   return fetchData(MATCHES_URL, match, 'POST')
     .then(res => res.json())
 }
