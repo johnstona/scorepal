@@ -4,8 +4,11 @@ import React, { useState } from 'react'
 
 const LiveMatch = ({userLiveMatch, match, matches}) => {
 
-  const [ userMatch, toggleUserMatch ] = useState(userLiveMatch.id === parseInt(match.params.id))
+  const userMatch = (userLiveMatch.id === parseInt(match.params.id))
 
+// Match Score component should be rendered for the match
+// MatchCompleted ? render - this match is no longer live
+// userMatch ? render matchcontrolbuttons : render live updates
 
 return <div>{userMatch ? 'Your Live match!' : 'Not Your Match'}</div>
 
