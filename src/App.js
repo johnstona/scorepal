@@ -73,14 +73,16 @@ class App extends React.Component {
     match.opponent_id = opponent ? opponent.id : null
     API.createMatch(match, this.state.currentUser.id)
     .then(userLiveMatch => {
-      this.setState({matches: [...this.state.matches, userLiveMatch]})
-      history.push(`/matches/live/${userLiveMatch.id}`)
+      this.setState({matches: [...this.state.matches, userLiveMatch], userLiveMatch: userLiveMatch}, () => {history.push(`/matches/live/${this.state.userLiveMatch.id}`)})
     })
   }
 
+  //this will currently change all the subscribers 
+
   updateScoreActionCable = (data) => {
     const newArray = this.state.matches.filter(match => match.id !== data.id)
-    this.setState({userLiveMatch: data, matches: [...newArray, data]})
+    const newUserLiveMatch = (data.id === this.state.userLiveMatch.id) ? data : this.state.userLiveMatch
+    this.setState({userLiveMatch: newUserLiveMatch, matches: [...newArray, data]})
   }
 
   updateUserLiveMatch = (userLiveMatch) => {
