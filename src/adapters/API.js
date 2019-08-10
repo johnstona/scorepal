@@ -82,6 +82,11 @@ const getUserFollowing = (id) => {
     .then(res => res.json())
 }
 
+const getAllMatches = () => {
+  return fetch(MATCHES_URL)
+    .then(res => res.json())
+}
+
 export default {
   createSubscription,
   getAllUsers,
@@ -92,5 +97,6 @@ export default {
   createFollow,
   loginUser,
   getUserMatches,
-  getUserFollowing
+  getUserFollowing,
+  getAllMatches
 }

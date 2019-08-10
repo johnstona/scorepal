@@ -25,7 +25,7 @@ class App extends React.Component {
     },
     followers: [],
     following: [],
-    liveMatches: [],
+    matches: [],
     userMatches: [],
     users: [],
     userLiveMatch: {}
@@ -34,6 +34,8 @@ class App extends React.Component {
   componentDidMount() {
     API.getAllUsers()
     .then(users => this.setState({users}))
+    API.getAllMatches()
+    .then(matches => this.setState({matches}))
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -74,6 +76,16 @@ class App extends React.Component {
       )
   }
 
+  updateUserLiveMatch = (userLiveMatch) => {
+    this.setState({userLiveMatch})
+  }
+
+  updateScore = (user_score, opponent_score, match) => {
+    const updatedMatch = {...match, user_score: user_score, opponent_score: opponent_score}
+    API.updateMatch(updatedMatch)
+    .then(userLiveMatch => this.setState({userLiveMatch}))
+  }
+
   matchOpponent = (match) => match.opponent_id ? this.state.users.filter(user => user.id === match.opponent_id) : match.opponent_name
   matchUser = (match) => this.state.users.filter(user => user.id === match.user_id)
 
@@ -99,7 +111,7 @@ class App extends React.Component {
         <Route exact path='/social' render={props => <Social {...props} />} />
         <Route exact path='/matches/new' render={props => <NewMatch {...props} match={userLiveMatch} createMatch={this.createMatch}/> } />        
         <Route exact path='/matches/all' render={props => LazyComponent(userMatches, <MatchHistory {...props} matches={this.state.userMatches} matchUsers={matchUsers} matchOpponents={matchOpponents}/>)} />
-        <Route exact path='/matches/live/:id' render={props => <LiveMatch {...props} matches={this.state.liveMatches} userLiveMatch={userLiveMatch} currentUser={currentUser} /> } />
+        <Route exact path='/matches/live/:id' render={props => <LiveMatch {...props} updateScore={this.updateScore} setMatch={this.updateUserLiveMatch} users={this.state.users} matches={this.state.matches} userLiveMatch={userLiveMatch} currentUser={currentUser} /> } />
       </BrowserRouter>
     </div>
   )
