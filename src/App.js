@@ -36,6 +36,7 @@ class App extends React.Component {
     .then(users => this.setState({users}))
     API.getAllMatches()
     .then(matches => this.setState({matches}))
+    API.createSubscription(this.updateScoreActionCable)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -68,11 +69,18 @@ class App extends React.Component {
   }
 
   createMatch = (match, history) => {
+    const opponent = this.state.users.find(user => user.username === match.opponent_username)
+    match.opponent_id = opponent ? opponent.id : null
     API.createMatch(match, this.state.currentUser.id)
     .then(userLiveMatch => {
       this.setState({matches: [...this.state.matches, userLiveMatch]})
       history.push(`/matches/live/${userLiveMatch.id}`)
     })
+  }
+
+  updateScoreActionCable = (data) => {
+    const newArray = this.state.matches.filter(match => match.id !== data.id)
+    this.setState({userLiveMatch: data, matches: [...newArray, data]})
   }
 
   updateUserLiveMatch = (userLiveMatch) => {
@@ -96,18 +104,19 @@ class App extends React.Component {
     const matchUsers = this.state.userMatches.map(match => this.matchUser(match))
     const userMatches = this.state.userMatches
     const userLiveMatch = this.state.userLiveMatch
+    const following = this.state.following
 
   return (
 
     <div>
       <BrowserRouter>
         <NavBar />
-        <Route exact path='/' render={() => <Main user={currentUser} />} />
+        <Route exact path='/' render={() => <Main />} />
         <Route exact path='/signup' render={props => <Signup {...props} signupUser={this.signup} />} />
         <Route exact path='/login' render={props => <Login {...props} loginUser={this.login} />} />
         <Route exact path='/home' render={props => LazyComponent(currentUser, <Home {...props} currentUser={currentUser} />)} />
         <Route exact path='/matches' render={props => <Match {...props} currentUser={currentUser} createMatch={this.createMatch}/>} />
-        <Route exact path='/social' render={props => <Social {...props} />} />
+        <Route exact path='/social' render={props => <Social {...props} following={following} />} />
         <Route exact path='/matches/new' render={props => <NewMatch {...props} match={userLiveMatch} createMatch={this.createMatch}/> } />        
         <Route exact path='/matches/all' render={props => LazyComponent(userMatches, <MatchHistory {...props} matches={this.state.userMatches} matchUsers={matchUsers} matchOpponents={matchOpponents}/>)} />
         <Route exact path='/matches/live/:id' render={props => <LiveMatch {...props} updateScore={this.updateScore} setMatch={this.updateUserLiveMatch} users={this.state.users} matches={this.state.matches} userLiveMatch={userLiveMatch} currentUser={currentUser} /> } />

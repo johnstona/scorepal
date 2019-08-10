@@ -11,7 +11,8 @@ const NewMatch = ({ history, match, createMatch }) => {
     sport: '',
     user_score: 0,
     opponent_score: 0,
-    opponent_name: ''
+    opponent_name: '',
+    opponent_username: ''
   }
 
   const { input, handleChange, handleSubmit } = useForm(newMatch, initialValues)
@@ -41,7 +42,15 @@ const NewMatch = ({ history, match, createMatch }) => {
               iconPosition='left'
               placeholder='Opponent name'
             />
-
+            <Form.Input
+              fluid
+              name='opponent_username'
+              onChange={handleChange}
+              value={input.opponent_username}
+              icon='user'
+              iconPosition='left'
+              placeholder='or opponent username'
+            />
             <Button onClick={handleSubmit} color='green' fluid size='large'>
             Start match!
             </Button>
