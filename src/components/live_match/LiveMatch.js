@@ -5,23 +5,23 @@ import ScoreButtons from '../score_buttons/ScoreButtons'
 
 // NB match in this component is the 'match' from props
 
-const LiveMatch = ({ updateScore, userLiveMatch, match, matches, users, setMatch }) => {
+const LiveMatch = ({ currentUser, updateScore, userLiveMatch, match, matches, users, setMatch }) => {
   const LazyComponent = (condition, component) => condition ? component : <Loading />
 
-  const userMatch = userLiveMatch ? (userLiveMatch.id === parseInt(match.params.id)) : null
-  const player1 = currentMatch ? users.find(user => user.id === currentMatch.user_id) : null
-  const player2 = currentMatch ? (users.find(user => user.id === currentMatch.opponent_id) || currentMatch.opponent_name) : null
-  const player1Score = currentMatch ? currentMatch.user_score : 0
-  const player2Score = currentMatch ? currentMatch.opponent_score : 0
+  const currentMatch = matches.find(m => m.id === parseInt(match.params.id))
+  const userMatch = userLiveMatch ? userLiveMatch.user_id === currentUser.id : false
+  const player1 = userLiveMatch ? users.find(user => user.id === userLiveMatch.user_id) : null
+  const player2 = userLiveMatch ? (users.find(user => user.id === userLiveMatch.opponent_id) || userLiveMatch.opponent_name) : null
+  const player1Score = userLiveMatch ? userLiveMatch.user_score : 0
+  const player2Score = userLiveMatch ? userLiveMatch.opponent_score : 0
 
   const updateScoreLive = (score1, score2) => {
     const player1UpdatedScore = (player1Score + score1)
     const player2UpdatedScore = (player2Score + score2)
-    updateScore(player1UpdatedScore, player2UpdatedScore, currentMatch)
+    updateScore(player1UpdatedScore, player2UpdatedScore, userLiveMatch)
   }
 
   useEffect(() => {
-    const currentMatch = matches.find(m => m.id === parseInt(match.params.id))
     setMatch(currentMatch)
   }, [currentMatch, setMatch])
 

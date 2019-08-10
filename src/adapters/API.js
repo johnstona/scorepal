@@ -25,66 +25,66 @@ const createSubscription = () => {
   })
 }
 
-const getAllUsers = () => {
-  return fetch(USERS_URL)
-    .then(res => res.json())
+const getAllUsers = async () => {
+  const res = await fetch(USERS_URL);
+  return await res.json();
 }
 
-const createUser = (user) => {
-  return fetchData(USERS_URL, user, 'POST')
-    .then(res => res.json())
+const createUser = async (user) => {
+  const res = await fetchData(USERS_URL, user, 'POST');
+  return await res.json();
 }
 
-const updateUser = (user) => {
-  return fetchData(`${USERS_URL}/${user.id}`, user, 'PATCH')
-    .then(res => res.json())
+const updateUser = async (user) => {
+  const res = await fetchData(`${USERS_URL}/${user.id}`, user, 'PATCH');
+  return await res.json();
 }
 
-const createMatch = (newMatch, id) => {
+const createMatch = async (newMatch, id) => {
   const match = {
     ...newMatch,
     user_id: id
   }
-  return fetchData(MATCHES_URL, match, 'POST')
-    .then(res => res.json())
+  const res = await fetchData(MATCHES_URL, match, 'POST');
+  return await res.json();
 }
 
-const updateMatch = (match) => {
-  return fetchData(`${MATCHES_URL}/${match.id}`, match, 'PATCH')
-    .then(res => res.json())
+const updateMatch = async (match) => {
+  const res = await fetchData(`${MATCHES_URL}/${match.id}`, match, 'PATCH');
+  return await res.json();
 }
 
-const createFollow = (user1, user2) => {
+const createFollow = async (user1, user2) => {
   const rel = {
     follower_id: user1.id,
     followed_id: user2.id
   }
-  return fetchData(RELATIONSHIPS_URL, rel, 'POST')
-    .then(res => res.json())
+  const res = await fetchData(RELATIONSHIPS_URL, rel, 'POST');
+  return await res.json();
 }
 
-const loginUser = (user) => {
+const loginUser = async (user) => {
   const u = {
     username: user.username,
     password: user.password
   }
-  return fetchData(`${LOGIN_URL}`, u, 'POST')
-    .then(res => res.json())
+  const res = await fetchData(`${LOGIN_URL}`, u, 'POST');
+  return await res.json();
 }
 
-const getUserMatches = (id) => {
-  return fetch(`${USERS_URL}/${id}/matches`)
-    .then(res => res.json())
+const getUserMatches = async (id) => {
+  const res = await fetch(`${USERS_URL}/${id}/matches`);
+  return await res.json();
 }
 
-const getUserFollowing = (id) => {
-  return fetch(`${USERS_URL}/${id}/following`)
-    .then(res => res.json())
+const getUserFollowing = async (id) => {
+  const res = await fetch(`${USERS_URL}/${id}/following`);
+  return await res.json();
 }
 
-const getAllMatches = () => {
-  return fetch(MATCHES_URL)
-    .then(res => res.json())
+const getAllMatches = async () => {
+  const res = await fetch(MATCHES_URL);
+  return await res.json();
 }
 
 export default {

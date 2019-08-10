@@ -70,10 +70,9 @@ class App extends React.Component {
   createMatch = (match, history) => {
     API.createMatch(match, this.state.currentUser.id)
     .then(userLiveMatch => {
-      this.setState({userLiveMatch})
+      this.setState({matches: [...this.state.matches, userLiveMatch]})
       history.push(`/matches/live/${userLiveMatch.id}`)
-    }
-      )
+    })
   }
 
   updateUserLiveMatch = (userLiveMatch) => {
