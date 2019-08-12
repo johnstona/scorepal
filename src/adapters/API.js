@@ -63,6 +63,17 @@ const createFollow = async (user1, user2) => {
   return res.json()
 }
 
+const unfollow = async (id, follower_id) => {
+  await fetch(`${RELATIONSHIPS_URL}/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ id: id, follower_id: follower_id })
+  }
+  )
+}
+
 const loginUser = async (user) => {
   const u = {
     username: user.username,
@@ -98,5 +109,6 @@ export default {
   loginUser,
   getUserMatches,
   getUserFollowing,
-  getAllMatches
+  getAllMatches,
+  unfollow
 }

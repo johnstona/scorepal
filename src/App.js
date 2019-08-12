@@ -58,6 +58,12 @@ class App extends React.Component {
       .then(history.push('/home'))
   }
 
+  unfollow = (id) => {
+    const following = this.state.following.filter(user => user.id !== id)
+    API.unfollow(id, this.state.currentUser.id)
+    .then(this.setState({following}))
+  }
+
   getMatches = (id) => {
     API.getUserMatches(id)
     .then(userMatches => this.setState({ userMatches }))
@@ -104,7 +110,7 @@ class App extends React.Component {
     const currentUser = this.state.currentUser
     const matchOpponents = this.state.userMatches.map(match => this.matchOpponent(match))
     const matchUsers = this.state.userMatches.map(match => this.matchUser(match))
-    const userMatches = this.state.userMatches
+    const userMatches = this.state.userMatches.sort((a, b) => b.id - a.id)
     const userLiveMatch = this.state.userLiveMatch
     const following = this.state.following
 
@@ -118,9 +124,9 @@ class App extends React.Component {
         <Route exact path='/login' render={props => <Login {...props} loginUser={this.login} />} />
         <Route exact path='/home' render={props => LazyComponent(currentUser, <Home {...props} currentUser={currentUser} />)} />
         <Route exact path='/matches' render={props => <Match {...props} currentUser={currentUser} createMatch={this.createMatch}/>} />
-        <Route exact path='/social' render={props => <Social {...props} following={following} />} />
+        <Route exact path='/social' render={props => <Social {...props} following={following} unfollow={this.unfollow} currentUser={currentUser} />} />
         <Route exact path='/matches/new' render={props => <NewMatch {...props} match={userLiveMatch} createMatch={this.createMatch}/> } />        
-        <Route exact path='/matches/all' render={props => LazyComponent(userMatches, <MatchHistory {...props} matches={this.state.userMatches} matchUsers={matchUsers} matchOpponents={matchOpponents}/>)} />
+        <Route exact path='/matches/all' render={props => LazyComponent(userMatches, <MatchHistory {...props} matches={userMatches} matchUsers={matchUsers} matchOpponents={matchOpponents}/>)} />
         <Route exact path='/matches/live/:id' render={props => <LiveMatch {...props} updateScore={this.updateScore} setMatch={this.updateUserLiveMatch} users={this.state.users} matches={this.state.matches} userLiveMatch={userLiveMatch} currentUser={currentUser} /> } />
       </BrowserRouter>
     </div>

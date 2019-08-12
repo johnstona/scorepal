@@ -30,8 +30,8 @@ const LiveMatch = ({ currentUser, updateScore, userLiveMatch, match, matches, us
   // userMatch ? render matchcontrolbuttons : render live updates
 
   return <>
-    <div>{userMatch ? <ScoreButtons updateScore={updateScoreLive} /> : 'Not Your Match'}</div>
     {LazyComponent((player1 && player2), <MatchScore match={userLiveMatch} player1={player1} player2={player2} />)}
+    <div>{userMatch ? <ScoreButtons updateScore={updateScoreLive} userMatch={userMatch} /> : 'Not Your Match'}</div>
       </>
 }
 

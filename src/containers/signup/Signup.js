@@ -1,6 +1,7 @@
 import React from 'react'
 import { useForm } from '../../Hooks'
 import { Button, Form, Grid, Header, Icon, Message, Segment } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
 const SignupForm = ({ history, signupUser }) => {
   const signup = () => {
@@ -70,7 +71,7 @@ const SignupForm = ({ history, signupUser }) => {
           </Segment>
         </Form>
         <Message>
-        Already have an account? <a href='/login'>Log in</a>
+        Already have an account? <Link to='/login'>Log in</Link>
         </Message>
       </Grid.Column>
     </Grid>
