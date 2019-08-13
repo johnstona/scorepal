@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import MatchScore from '../match_score/MatchScore'
 import Loading from '../Loading/Loading'
 import ScoreButtons from '../score_buttons/ScoreButtons'
+import { Container, Divider, Header } from 'semantic-ui-react'
 
 // NB match in this component is the 'match' from props
 
@@ -30,8 +31,13 @@ const LiveMatch = ({ currentUser, updateScore, userLiveMatch, match, matches, us
   // userMatch ? render matchcontrolbuttons : render live updates
 
   return <>
-    {LazyComponent((player1 && player2), <MatchScore match={userLiveMatch} player1={player1} player2={player2} />)}
-    <div>{userMatch ? <ScoreButtons updateScore={updateScoreLive} userMatch={userMatch} /> : 'Not Your Match'}</div>
+    <Container >
+      {LazyComponent((player1 && player2), <MatchScore match={userLiveMatch} player1={player1} player2={player2} />)}
+    </Container>
+    <Divider />
+    <Container>
+      {userMatch ? <ScoreButtons updateScore={updateScoreLive} userMatch={userMatch} /> : 'Not Your Match'}
+    </Container>
       </>
 }
 

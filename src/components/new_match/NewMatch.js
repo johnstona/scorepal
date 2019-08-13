@@ -12,7 +12,8 @@ const NewMatch = ({ history, match, createMatch }) => {
     user_score: 0,
     opponent_score: 0,
     opponent_name: '',
-    opponent_username: ''
+    opponent_username: '',
+    live: true
   }
 
   const { input, handleChange, handleSubmit } = useForm(newMatch, initialValues)

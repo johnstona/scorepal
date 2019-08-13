@@ -87,8 +87,8 @@ class App extends React.Component {
 
   updateScoreActionCable = (data) => {
     const newArray = this.state.matches.filter(match => match.id !== data.id)
-    const newUserLiveMatch = (data.id === this.state.userLiveMatch.id) ? data : this.state.userLiveMatch
-    this.setState({userLiveMatch: newUserLiveMatch, matches: [...newArray, data]})
+    // const newUserLiveMatch = this.state.userLiveMatch ? (data.id === this.state.userLiveMatch.id) ? data : this.state.userLiveMatch
+    this.setState({userLiveMatch: data, matches: [...newArray, data]})
   }
 
   updateUserLiveMatch = (userLiveMatch) => {
@@ -113,6 +113,9 @@ class App extends React.Component {
     const userMatches = this.state.userMatches.sort((a, b) => b.id - a.id)
     const userLiveMatch = this.state.userLiveMatch
     const following = this.state.following
+    const liveMatches = this.state.matches.filter(match => match.live === true)
+    const liveMatchOpponents = liveMatches.map(match => this.matchOpponent(match))
+    const liveMatchUsers = liveMatches.map(match => this.matchUser(match))
 
   return (
 
@@ -127,6 +130,7 @@ class App extends React.Component {
         <Route exact path='/social' render={props => <Social {...props} following={following} unfollow={this.unfollow} currentUser={currentUser} />} />
         <Route exact path='/matches/new' render={props => <NewMatch {...props} match={userLiveMatch} createMatch={this.createMatch}/> } />        
         <Route exact path='/matches/all' render={props => LazyComponent(userMatches, <MatchHistory {...props} matches={userMatches} matchUsers={matchUsers} matchOpponents={matchOpponents}/>)} />
+        <Route exact path='/matches/live' render={props => LazyComponent((liveMatches && matchUsers && matchOpponents), <MatchHistory {...props} matches={liveMatches} matchUsers={liveMatchUsers} matchOpponents={liveMatchOpponents}/> )} />
         <Route exact path='/matches/live/:id' render={props => <LiveMatch {...props} updateScore={this.updateScore} setMatch={this.updateUserLiveMatch} users={this.state.users} matches={this.state.matches} userLiveMatch={userLiveMatch} currentUser={currentUser} /> } />
       </BrowserRouter>
     </div>
