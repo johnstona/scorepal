@@ -17,11 +17,11 @@ import LiveMatch from './components/live_match/LiveMatch';
 class App extends React.Component {
   state = {
     currentUser: {
-      "id": 9,
-      "username": "Benfica834",
-      "name": "Paul Pogba",
-      "password": "password",
-      "avatar": "13"
+      "id": 15,
+    "username": "Galatasaray263",
+    "name": "Gianluigi Buffon",
+    "password": "password",
+    "avatar": "3"
     },
     followers: [],
     following: [],
@@ -121,7 +121,7 @@ class App extends React.Component {
 
     <div>
       <BrowserRouter>
-        <NavBar />
+        <NavBar {...this.props}/>
         <Route exact path='/' render={() => <Main />} />
         <Route exact path='/signup' render={props => <Signup {...props} signupUser={this.signup} />} />
         <Route exact path='/login' render={props => <Login {...props} loginUser={this.login} />} />
