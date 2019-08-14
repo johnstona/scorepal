@@ -29,6 +29,7 @@ const NavBar = ({ history }) => {
       <Menu.Menu position='right'>
         <Dropdown item text='Navigation'>
           <Dropdown.Menu>
+            <Dropdown.Item value='home' key='home' onClick={() => handleDropdown('home')}>Home</Dropdown.Item>
             <Dropdown.Item value='matches' key='matches' onClick={() => handleDropdown('matches')}>Matches</Dropdown.Item>
             <Dropdown.Item value='social' onClick={() => handleDropdown('social')}>Social</Dropdown.Item>
             <Dropdown.Item value='logout' onClick={() => handleDropdown('logout')}>Logout</Dropdown.Item>

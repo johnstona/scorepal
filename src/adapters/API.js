@@ -93,6 +93,11 @@ const getUserFollowing = async (id) => {
   return res.json()
 }
 
+const getUserFollowers = async (id) => {
+  const res = await fetch(`${USERS_URL}/${id}/followers`)
+  return res.json()
+}
+
 const getAllMatches = async () => {
   const res = await fetch(MATCHES_URL)
   return res.json()
@@ -110,5 +115,6 @@ export default {
   getUserMatches,
   getUserFollowing,
   getAllMatches,
-  unfollow
+  unfollow,
+  getUserFollowers
 }

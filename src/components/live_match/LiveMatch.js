@@ -6,7 +6,7 @@ import { Container, Divider, Header } from 'semantic-ui-react'
 
 // NB match in this component is the 'match' from props
 
-const LiveMatch = ({ currentUser, updateScore, userLiveMatch, match, matches, users, setMatch }) => {
+const LiveMatch = ({ currentUser, updateScore, userLiveMatch, match, matches, users, setMatch, finishMatch }) => {
   const LazyComponent = (condition, component) => condition ? component : <Loading />
 
   const currentMatch = matches.find(m => m.id === parseInt(match.params.id))
@@ -35,9 +35,11 @@ const LiveMatch = ({ currentUser, updateScore, userLiveMatch, match, matches, us
       {LazyComponent((player1 && player2), <MatchScore match={userLiveMatch} player1={player1} player2={player2} />)}
     </Container>
     <Divider />
-    <Container>
-      {userMatch ? <ScoreButtons updateScore={updateScoreLive} userMatch={userMatch} /> : 'Not Your Match'}
-    </Container>
+    {userLiveMatch ? ( userLiveMatch.live ? (
+      <Container>
+        {userMatch ? <ScoreButtons updateScore={updateScoreLive} finish={finishMatch} match={userLiveMatch}/> : 'Not Your Match'}
+      </Container>
+    ) : 'This match has finished' ) : <Loading />}
       </>
 }
 
