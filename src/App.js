@@ -55,7 +55,7 @@ class App extends React.Component {
 
   signup = (user, history) => {
     API.createUser(user)
-      .then(currentUser => this.setState({currentUser}))
+      .then(currentUser => this.setState({currentUser}, () => this.setState({users: [...this.state.users, currentUser]})))
       .then(history.push('/home'))
   }
 

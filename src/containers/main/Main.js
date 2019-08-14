@@ -1,13 +1,25 @@
 import React from 'react'
-import { Button } from 'semantic-ui-react'
+import { Button, Container, Divider } from 'semantic-ui-react'
 import Welcome from '../../components/welcome/Welcome'
 import { Link } from 'react-router-dom'
 
 const Main = () => {
   return <>
+    <Divider hidden/>
+    <Divider hidden/>
+    <Divider hidden/>
+    <Divider hidden/>
     <Welcome />
-    <Button to='/login' as={Link} >Login</Button>
-    <Button to='/signup' as={Link} >Signup</Button>
+    <Divider hidden/>
+    <Divider hidden/>
+    <Divider hidden/>
+    <Divider hidden/>
+    <Container textAlign='center'>
+    <Button.Group vertical textAlign='center'>
+      <Button size='massive' color='green' to='/login' as={Link} >Login</Button>
+      <Button size='massive' color='blue' to='/signup' as={Link} >Signup</Button>
+    </Button.Group>
+    </Container>
         </>
 }
 
