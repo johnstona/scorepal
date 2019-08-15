@@ -2,8 +2,9 @@ import React from 'react'
 import { Grid, Segment, Label, Header, Divider } from 'semantic-ui-react'
 
 const MatchScore = ({ match, player1, player2 }) => {
+  
   return <>
-    <Header textAlign='center'>{match.sport}</Header>
+    <Header textAlign='center'>{match.sport.name.toUpperCase()}</Header>
     <Divider hidden />
     <Grid>
       <Grid.Row centered columns={2}>

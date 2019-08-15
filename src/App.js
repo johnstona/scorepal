@@ -17,11 +17,11 @@ import LiveMatch from './components/live_match/LiveMatch';
 class App extends React.Component {
   state = {
     currentUser: {
-      "id": 16,
-    "username": "Arsenal1",
-    "name": "Willian",
-    "password": "password",
-    "avatar": "12"
+      "id": 3,
+      "username": "alpaca498",
+      "name": "Neymar",
+      "password": "password",
+      "avatar": "19"
     },
     followers: [],
     following: [],
@@ -37,7 +37,7 @@ class App extends React.Component {
     API.getAllUsers()
     .then(users => this.setState({users}))
     API.getAllMatches()
-    .then(matches => this.setState({matches}))
+    .then(matches => this.setState({matches: matches.data}))
     API.createSubscription(this.updateScoreActionCable)
   }
 
@@ -120,8 +120,8 @@ class App extends React.Component {
     .then(userLiveMatch => this.setState({userLiveMatch}))
   }
 
-  matchOpponent = (match) => match.opponent_id ? this.state.users.filter(user => user.id === match.opponent_id) : match.opponent_name
-  matchUser = (match) => this.state.users.filter(user => user.id === match.user_id)
+  matchOpponent = (match) => match.opponent_id ? this.state.users.filter(user => user.id === match.attirbutes.opponent_id) : match.attributes.opponent_name
+  matchUser = (match) => this.state.users.filter(user => user.id === match.attributes.user.id)
 
   render() {
 
@@ -129,11 +129,11 @@ class App extends React.Component {
     const currentUser = this.state.currentUser
     const matchOpponents = this.state.userMatches.map(match => this.matchOpponent(match))
     const matchUsers = this.state.userMatches.map(match => this.matchUser(match))
-    const userMatches = this.state.userMatches.sort((a, b) => b.id - a.id)
+    const userMatches = this.state.matches.filter(match => match.attributes.user.id === currentUser.id)
     const userLiveMatch = this.state.userLiveMatch
     const following = this.state.following
     const followers = this.state.followers
-    const liveMatches = this.state.matches.filter(match => match.live === true)
+    const liveMatches = this.state.matches.filter(match => match.attributes.live === true)
     const liveMatchOpponents = liveMatches.map(match => this.matchOpponent(match))
     const liveMatchUsers = liveMatches.map(match => this.matchUser(match))
     const allUsers = this.state.users
@@ -150,7 +150,7 @@ class App extends React.Component {
         <Route exact path='/matches' render={props => <Match {...props} currentUser={currentUser} createMatch={this.createMatch}/>} />
         <Route exact path='/social' render={props => <Social {...props} following={following} followers={followers} unfollow={this.unfollow} follow={this.follow} currentUser={currentUser} />} />
         <Route exact path='/matches/new' render={props => <NewMatch {...props} match={userLiveMatch} createMatch={this.createMatch}/> } />        
-        <Route exact path='/matches/all' render={props => LazyComponent((userMatches && allUsers), <MatchList {...props} matches={userMatches} users={allUsers}/>)} />
+        <Route exact path='/matches/all' render={props => LazyComponent(((userMatches.length > 0) && allUsers), <MatchList {...props} matches={userMatches} users={allUsers}/>)} />
         <Route exact path='/matches/live' render={props => LazyComponent((liveMatches && allUsers), <MatchList {...props} matches={liveMatches} users={allUsers}/> )} />
         <Route exact path='/matches/live/:id' render={props => <LiveMatch {...props} updateScore={this.updateScore} setMatch={this.updateUserLiveMatch} users={this.state.users} matches={this.state.matches} userLiveMatch={userLiveMatch} currentUser={currentUser} finishMatch={this.finishMatch}/> } />
       </BrowserRouter>

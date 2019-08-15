@@ -96,6 +96,11 @@ const getUserMatches = async (id) => {
   return res.json()
 }
 
+const getMatch = async (id) => {
+  const res = await fetch(`${MATCHES_URL}/${id}`)
+  return res.json()
+}
+
 const getUserFollowing = async (id) => {
   const res = await fetch(`${USERS_URL}/${id}/following`)
   return res.json()
@@ -125,5 +130,6 @@ export default {
   getAllMatches,
   unfollow,
   getUserFollowers,
-  createLiveSubscription
+  createLiveSubscription,
+  getMatch
 }
