@@ -25,14 +25,6 @@ const createSubscription = (callback) => {
   })
 }
 
-const createLiveSubscription = (callback) => {
-  ACTION_CABLE.subscriptions.create('LiveMatchChannel', {
-    received: data => {
-      callback(data)
-    }
-  })
-}
-
 const getAllUsers = async () => {
   const res = await fetch(USERS_URL)
   return res.json()
@@ -124,6 +116,5 @@ export default {
   getUserFollowing,
   getAllMatches,
   unfollow,
-  getUserFollowers,
-  createLiveSubscription
+  getUserFollowers
 }

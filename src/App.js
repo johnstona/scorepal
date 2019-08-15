@@ -28,9 +28,7 @@ class App extends React.Component {
     matches: [],
     userMatches: [],
     users: [],
-    userLiveMatch: {},
-    matchEvents: [],
-    sports: []
+    userLiveMatch: {}
 }
 
   componentDidMount() {
