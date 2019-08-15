@@ -3,11 +3,15 @@ import MatchScore from '../match_score/MatchScore'
 import Loading from '../Loading/Loading'
 import ScoreButtons from '../score_buttons/ScoreButtons'
 import { Container, Divider, Header } from 'semantic-ui-react'
+import API from '../../adapters/API'
 
 // NB match in this component is the 'match' from props
 
 const LiveMatch = ({ currentUser, updateScore, userLiveMatch, match, matches, users, setMatch, finishMatch }) => {
+  const [happenedEvents, addHappenedEvents] = useState([])
+  
   const LazyComponent = (condition, component) => condition ? component : <Loading />
+
 
   const currentMatch = matches.find(m => m.id === parseInt(match.params.id))
   const userMatch = userLiveMatch ? userLiveMatch.user_id === currentUser.id : false
@@ -15,6 +19,7 @@ const LiveMatch = ({ currentUser, updateScore, userLiveMatch, match, matches, us
   const player2 = userLiveMatch ? (users.find(user => user.id === userLiveMatch.opponent_id) || userLiveMatch.opponent_name) : null
   const player1Score = userLiveMatch ? userLiveMatch.user_score : 0
   const player2Score = userLiveMatch ? userLiveMatch.opponent_score : 0
+  const matchEvents = currentMatch.
 
   const updateScoreLive = (score1, score2) => {
     const player1UpdatedScore = (player1Score + score1)
@@ -22,9 +27,17 @@ const LiveMatch = ({ currentUser, updateScore, userLiveMatch, match, matches, us
     updateScore(player1UpdatedScore, player2UpdatedScore, userLiveMatch)
   }
 
+  const updateEvents = (data) => {
+    console.log(data)
+  }
+
   useEffect(() => {
     setMatch(currentMatch)
   }, [currentMatch, setMatch])
+
+  useEffect(() => {
+    API.createLiveSubscription(updateEvents)
+  }, [currentMatch])
 
   // Match Score component should be rendered for the match
   // MatchCompleted ? render - this match is no longer live
