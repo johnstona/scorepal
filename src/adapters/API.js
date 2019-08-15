@@ -6,6 +6,7 @@ const USERS_URL = `${BASE_URL}/users`
 const MATCHES_URL = `${BASE_URL}/matches`
 const RELATIONSHIPS_URL = `${BASE_URL}/relationships`
 const LOGIN_URL = `${BASE_URL}/login`
+const SPORTS_URL = `${BASE_URL}/sports`
 
 const fetchData = (url = '', data = {}, method) => {
   return fetch(url, {
@@ -116,6 +117,11 @@ const getAllMatches = async () => {
   return res.json()
 }
 
+const getAllSports = async () => {
+  const res = await fetch(SPORTS_URL)
+  return res.json()
+}
+
 export default {
   createSubscription,
   getAllUsers,
@@ -131,5 +137,6 @@ export default {
   unfollow,
   getUserFollowers,
   createLiveSubscription,
-  getMatch
+  getMatch,
+  getAllSports
 }

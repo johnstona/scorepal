@@ -1,14 +1,20 @@
 import React from 'react'
 import { Button, Grid, Container, Divider } from 'semantic-ui-react'
 
-const ScoreButtons = ({ updateScore, finish, match }) => {
+const ScoreButtons = ({ updateScore, finish, match, sport }) => {
+  const scoreEvents = sport.attributes.score_events
+  const matchEvents = sport.attributes.match_events
   return <>
     <Grid columns='2' divided textAlign='center'>
       <Grid.Column>
-      <Button size='huge' color='blue' onClick={() => updateScore(1, 0)}>Player 1</Button>
+        {scoreEvents.map(scoreEvent =>
+          <Button size='huge' color='blue' onClick={() => updateScore(scoreEvent.point_value, 0)}>{scoreEvent.name}</Button>
+        )}
       </Grid.Column>
       <Grid.Column>
-      <Button size='huge' color='blue' onClick={() => updateScore(0, 1)}>Player 2</Button>
+        {scoreEvents.map(scoreEvent =>
+          <Button size='huge' color='blue' onClick={() => updateScore(0, scoreEvent.point_value)}>{scoreEvent.name}</Button>
+        )}
       </Grid.Column>
     </Grid>
     <Divider hidden />

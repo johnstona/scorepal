@@ -7,7 +7,7 @@ import API from '../../adapters/API'
 
 // NB match in this component is the 'match' from props
 
-const LiveMatch = ({ currentUser, updateScore, match, matches, users, setMatch, finishMatch }) => {
+const LiveMatch = ({ currentUser, updateScore, match, users, finishMatch, sports }) => {
   const [liveMatch, setCurrentMatch] = useState()
 
   const LazyComponent = (condition, component) => condition ? component : <Loading />
@@ -18,15 +18,16 @@ const LiveMatch = ({ currentUser, updateScore, match, matches, users, setMatch, 
   const player2 = userLiveMatch ? (users.find(user => user.id === userLiveMatch.opponent_id) || userLiveMatch.opponent_name) : null
   const player1Score = userLiveMatch ? userLiveMatch.user_score : 0
   const player2Score = userLiveMatch ? userLiveMatch.opponent_score : 0
+  const sport = userLiveMatch ? (sports.find(sport => parseInt(sport.id) === userLiveMatch.sport.id)) : null
 
   const updateScoreLive = (score1, score2) => {
     const player1UpdatedScore = (player1Score + score1)
     const player2UpdatedScore = (player2Score + score2)
-    updateScore(player1UpdatedScore, player2UpdatedScore, userLiveMatch)
+    updateScore(player1UpdatedScore, player2UpdatedScore, liveMatch.data)
   }
 
   const updateEvents = (data) => {
-    console.log(data)
+    setCurrentMatch(data)
   }
 
   useEffect(() => {
@@ -47,9 +48,9 @@ const LiveMatch = ({ currentUser, updateScore, match, matches, users, setMatch, 
       {LazyComponent((userLiveMatch && player1 && player2), <MatchScore match={userLiveMatch} player1={player1} player2={player2} />)}
     </Container>
     <Divider />
-    {userLiveMatch ? (userLiveMatch.live ? (
+    {(userLiveMatch) ? (userLiveMatch.live ? (
       <Container>
-        {userMatch ? <ScoreButtons updateScore={updateScoreLive} finish={finishMatch} match={userLiveMatch} /> : 'Not Your Match'}
+        {userMatch ? LazyComponent(sport, <ScoreButtons updateScore={updateScoreLive} finish={finishMatch} match={userLiveMatch} sport={sport} /> ) : 'Not Your Match'}
       </Container>
     ) : 'This match has finished') : <Loading />}
       </>
