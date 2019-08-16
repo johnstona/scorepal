@@ -102,19 +102,19 @@ class App extends React.Component {
   //this will currently change all the subscribers 
 
   updateScoreActionCable = (match) => {
-    const newArray = this.state.matches.filter(m => m.id !== match.id)
+    const newArray = this.state.matches.filter(m => m.id !== match.data.id)
     // const newUserLiveMatch = this.state.userLiveMatch ? (data.id === this.state.userLiveMatch.id) ? data : this.state.userLiveMatch
     this.setState({matches: [...newArray, match.data]})
   }
 
   updateScore = (user_score, opponent_score, match) => {
     const updatedMatch = {...match, user_score: user_score, opponent_score: opponent_score}
-    API.updateMatch(updatedMatch)
+    API.updateMatch(updatedMatch, updatedMatch.id)
   }
 
-  finishMatch = (match) => {
+  finishMatch = (match, id) => {
     const updatedMatch = {...match, live: false}
-    API.updateMatch(updatedMatch)
+    API.updateMatch(updatedMatch, id)
     .then(userLiveMatch => this.setState({userLiveMatch}))
   }
 
@@ -129,7 +129,8 @@ class App extends React.Component {
     const userLiveMatch = this.state.userLiveMatch
     const following = this.state.following
     const followers = this.state.followers
-    const liveMatches = this.state.matches ? this.state.matches.filter(match => match.attributes.live === true) : null
+    const allLiveMatches = this.state.matches ? this.state.matches.filter(match => match.attributes.live === true) : null
+    const liveMatches = allLiveMatches.sort((a, b) => b.id - a.id)
     const allUsers = this.state.users
 
 

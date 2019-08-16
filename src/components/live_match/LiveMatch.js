@@ -4,6 +4,7 @@ import Loading from '../Loading/Loading'
 import ScoreButtons from '../score_buttons/ScoreButtons'
 import { Container, Divider, Header } from 'semantic-ui-react'
 import API from '../../adapters/API'
+import MatchEvents from '../match_events/MatchEvents'
 
 // NB match in this component is the 'match' from props
 
@@ -26,8 +27,18 @@ const LiveMatch = ({ currentUser, updateScore, match, users, finishMatch, sports
     updateScore(player1UpdatedScore, player2UpdatedScore, liveMatch.data)
   }
 
-  const updateEvents = (data) => {
+  const finish = (match) => {
+    finishMatch(match, liveMatch.data.id)
+  }
+
+  const updateMatch = (data) => {
+    if (data.data.id !== match.params.id) return
     setCurrentMatch(data)
+    console.log(data)
+  }
+
+  const newMatchEvent = (matchEvent, player) => {
+    API.createHappenedMatchEvent(matchEvent.id, liveMatch.data.id, player)
   }
 
   useEffect(() => {
@@ -36,7 +47,7 @@ const LiveMatch = ({ currentUser, updateScore, match, users, finishMatch, sports
   }, [match.params.id])
 
   useEffect(() => {
-    API.createLiveSubscription(updateEvents)
+    API.createLiveSubscription(updateMatch)
   }, [match.params.id])
 
   // Match Score component should be rendered for the match
@@ -50,7 +61,7 @@ const LiveMatch = ({ currentUser, updateScore, match, users, finishMatch, sports
     <Divider />
     {(userLiveMatch) ? (userLiveMatch.live ? (
       <Container>
-        {userMatch ? LazyComponent(sport, <ScoreButtons updateScore={updateScoreLive} finish={finishMatch} match={userLiveMatch} sport={sport} /> ) : 'Not Your Match'}
+        {userMatch ? LazyComponent(sport && player1 && player2, <ScoreButtons updateScore={updateScoreLive} finish={finish} match={userLiveMatch} newMatchEvent={newMatchEvent} sport={sport} player1={player1} player2={player2} /> ) : <MatchEvents match={userLiveMatch} />}
       </Container>
     ) : 'This match has finished') : <Loading />}
       </>
