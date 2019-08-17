@@ -92,7 +92,8 @@ class App extends React.Component {
   createMatch = (match, history) => {
     const opponent = this.state.users.find(user => user.username === match.opponent_username)
     match.opponent_id = opponent ? opponent.id : null
-    match.sport_id = 2
+    debugger
+    match.sport_id = parseInt(this.state.sports.find(sport => sport.attributes.name === match.sport).id)
     API.createMatch(match, this.state.currentUser.id)
     .then(userLiveMatch => {
       history.push(`/matches/live/${userLiveMatch.data.id}`)
@@ -145,7 +146,7 @@ class App extends React.Component {
         <Route exact path='/home' render={props => LazyComponent(currentUser, <Home {...props} currentUser={currentUser} />)} />
         <Route exact path='/matches' render={props => <Match {...props} currentUser={currentUser} createMatch={this.createMatch}/>} />
         <Route exact path='/social' render={props => <Social {...props} following={following} followers={followers} unfollow={this.unfollow} follow={this.follow} currentUser={currentUser} />} />
-        <Route exact path='/matches/new' render={props => <NewMatch {...props} match={userLiveMatch} createMatch={this.createMatch}/> } />        
+        <Route exact path='/matches/new' render={props => <NewMatch {...props} match={userLiveMatch} createMatch={this.createMatch} sports={this.state.sports}/> } />        
         <Route exact path='/matches/all' render={props => LazyComponent(((userMatches.length > 0) && allUsers), <MatchList {...props} matches={userMatches} users={allUsers}/>)} />
         <Route exact path='/matches/live' render={props => LazyComponent((liveMatches && allUsers), <MatchList {...props} matches={liveMatches} users={allUsers}/> )} />
         <Route exact path='/matches/live/:id' render={props => <LiveMatch {...props} updateScore={this.updateScore} sports={this.state.sports} setMatch={this.updateUserLiveMatch} users={this.state.users} matches={this.state.matches} userLiveMatch={userLiveMatch} currentUser={currentUser} finishMatch={this.finishMatch}/> } />

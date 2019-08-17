@@ -1,13 +1,29 @@
-import React from 'react'
-import { Grid, Segment, Divider, Container, Label, Button } from 'semantic-ui-react'
+import React, { useState } from 'react'
+import { Grid, Segment, Divider, Container, Label, Button, Dropdown } from 'semantic-ui-react'
 import BackButton from '../back_button/BackButton'
 
 const MatchList = ({ matches, users, history }) => {
+  const [selection, changeSelection] = useState('')
+
+  const sports = matches && [...new Set(matches.map(match => match.attributes.sport.name))]
+  const sportOptions = sports && sports.map(sport => {
+    return { key: sport, value: sport, text: sport }
+  })
+
+  const handleChange = (e, { value }) => {
+    changeSelection(value)
+  }
 
   return <>
+    <Dropdown onChange={handleChange}
+      placeholder='Select Sport'
+      fluid
+      selection
+      options={sportOptions} />
 
     <Grid divided='vertically' textAlign='center'>
       {matches.map(match => {
+        if (match.attributes.sport.name !== selection) return
         return <Grid>
           <Grid.Row centered columns={2}>
             <Grid.Column >
@@ -29,7 +45,7 @@ const MatchList = ({ matches, users, history }) => {
             <Grid.Column textAlign='center'>
               <Label circular color='green' size='huge'>{match.attributes.opponent_score}
               </Label>
-          </Grid.Column>
+            </Grid.Column>
           </Grid.Row>
         </Grid>
       })}
