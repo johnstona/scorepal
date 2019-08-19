@@ -5,20 +5,20 @@ import { Link } from 'react-router-dom'
 
 const Main = () => {
   return <>
-    <Divider hidden/>
-    <Divider hidden/>
-    <Divider hidden/>
-    <Divider hidden/>
+    <Divider hidden />
+    <Divider hidden />
+    <Divider hidden />
+    <Divider hidden />
     <Welcome />
-    <Divider hidden/>
-    <Divider hidden/>
-    <Divider hidden/>
-    <Divider hidden/>
+    <Divider hidden />
+    <Divider hidden />
+    <Divider hidden />
+    <Divider hidden />
     <Container textAlign='center'>
-    <Button.Group vertical textAlign='center'>
-      <Button size='massive' color='green' to='/login' as={Link} >Login</Button>
-      <Button size='massive' color='blue' to='/signup' as={Link} >Signup</Button>
-    </Button.Group>
+      <Button.Group vertical>
+        <Button size='massive' color='green' to='/login' as={Link} >Login</Button>
+        <Button size='massive' color='blue' to='/signup' as={Link} >Signup</Button>
+      </Button.Group>
     </Container>
         </>
 }

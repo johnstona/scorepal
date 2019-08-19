@@ -24,7 +24,7 @@ const MatchList = ({ matches, users, history }) => {
     <Grid divided='vertically' textAlign='center'>
       {matches.map(match => {
         if (match.attributes.sport.name !== selection) return
-        return <Grid>
+        return <Grid key={match.id}>
           <Grid.Row centered columns={2}>
             <Grid.Column >
               <Segment textAlign='center'>{users.find(user => user.id === match.attributes.user.id).name}</Segment>

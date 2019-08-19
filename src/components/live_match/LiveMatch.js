@@ -37,8 +37,12 @@ const LiveMatch = ({ currentUser, updateScore, match, users, finishMatch, sports
     console.log(data)
   }
 
-  const newMatchEvent = (matchEvent, player) => {
-    API.createHappenedMatchEvent(matchEvent.id, liveMatch.data.id, player)
+  const newMatchEvent = (matchEvent, player, playerName) => {
+    API.createHappenedMatchEvent(matchEvent.id, liveMatch.data.id, player, playerName)
+  }
+
+  const newScoreEvent = (scoreEvent, player, playerName) => {
+    API.createHappenedScoreEvent(scoreEvent.id, liveMatch.data.id, player, playerName)
   }
 
   useEffect(() => {
@@ -61,9 +65,9 @@ const LiveMatch = ({ currentUser, updateScore, match, users, finishMatch, sports
     <Divider />
     {(userLiveMatch) ? (userLiveMatch.live ? (
       <Container>
-        {userMatch ? LazyComponent(sport && player1 && player2, <ScoreButtons updateScore={updateScoreLive} finish={finish} match={userLiveMatch} newMatchEvent={newMatchEvent} sport={sport} player1={player1} player2={player2} /> ) : <MatchEvents match={userLiveMatch} />}
+        {userMatch ? LazyComponent(sport && player1 && player2, <ScoreButtons updateScore={updateScoreLive} finish={finish} match={userLiveMatch} newMatchEvent={newMatchEvent} newScoreEvent={newScoreEvent} sport={sport} player1={player1} player2={player2} />) : <MatchEvents match={userLiveMatch} />}
       </Container>
-    ) : 'This match has finished') : <Loading />}
+    ) : <MatchEvents match={userLiveMatch} finished />) : <Loading />}
       </>
 }
 

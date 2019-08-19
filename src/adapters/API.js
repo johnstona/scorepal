@@ -8,6 +8,7 @@ const RELATIONSHIPS_URL = `${BASE_URL}/relationships`
 const LOGIN_URL = `${BASE_URL}/login`
 const SPORTS_URL = `${BASE_URL}/sports`
 const HAPPENED_EVENTS_URL = `${BASE_URL}/happened_events`
+const HAPPENED_SCORE_EVENTS_URL = `${BASE_URL}/happened_score_events`
 
 const fetchData = (url = '', data = {}, method) => {
   return fetch(url, {
@@ -131,13 +132,25 @@ const getAllSports = async () => {
   return res.json()
 }
 
-const createHappenedMatchEvent = async (matchEventId, matchId, player) => {
+const createHappenedMatchEvent = async (matchEventId, matchId, player, playerName) => {
   const event = {
     match_event_id: matchEventId,
     match_id: matchId,
-    player: player
+    player: player,
+    player_name: playerName
   }
   const res = await fetchData(HAPPENED_EVENTS_URL, event, 'POST')
+  return res.json()
+}
+
+const createHappenedScoreEvent = async (scoreEventId, matchId, player, playerName) => {
+  const event = {
+    score_event_id: scoreEventId,
+    match_id: matchId,
+    player: player,
+    player_name: playerName
+  }
+  const res = await fetchData(HAPPENED_SCORE_EVENTS_URL, event, 'POST')
   return res.json()
 }
 
@@ -158,5 +171,6 @@ export default {
   createLiveSubscription,
   getMatch,
   getAllSports,
-  createHappenedMatchEvent
+  createHappenedMatchEvent,
+  createHappenedScoreEvent
 }
