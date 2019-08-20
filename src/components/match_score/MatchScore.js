@@ -1,10 +1,10 @@
 import React from 'react'
-import { Grid, Segment, Label, Header, Divider } from 'semantic-ui-react'
+import { Grid, Segment, Label, Header } from 'semantic-ui-react'
 
 const MatchScore = ({ match, player1, player2 }) => {
+  
   return <>
-    <Header textAlign='center'>{match.sport}</Header>
-    <Divider hidden />
+    <Header textAlign='center'>{match.sport.name.toUpperCase()}</Header>
     <Grid>
       <Grid.Row centered columns={2}>
         <Grid.Column>

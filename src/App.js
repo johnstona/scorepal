@@ -17,11 +17,11 @@ import LiveMatch from './components/live_match/LiveMatch';
 class App extends React.Component {
   state = {
     currentUser: {
-      "id": 16,
-    "username": "Arsenal1",
-    "name": "Willian",
-    "password": "password",
-    "avatar": "12"
+      "id": 3,
+      "username": "alpaca498",
+      "name": "Neymar",
+      "password": "password",
+      "avatar": "19"
     },
     followers: [],
     following: [],
@@ -35,7 +35,9 @@ class App extends React.Component {
     API.getAllUsers()
     .then(users => this.setState({users}))
     API.getAllMatches()
-    .then(matches => this.setState({matches}))
+    .then(matches => this.setState({matches: matches.data}))
+    API.getAllSports()
+    .then(sports => this.setState({sports: sports.data}))
     API.createSubscription(this.updateScoreActionCable)
   }
 
@@ -88,53 +90,48 @@ class App extends React.Component {
   createMatch = (match, history) => {
     const opponent = this.state.users.find(user => user.username === match.opponent_username)
     match.opponent_id = opponent ? opponent.id : null
+    debugger
+    match.sport_id = parseInt(this.state.sports.find(sport => sport.attributes.name === match.sport).id)
     API.createMatch(match, this.state.currentUser.id)
     .then(userLiveMatch => {
-      this.setState({matches: [...this.state.matches, userLiveMatch], userLiveMatch: userLiveMatch}, () => {history.push(`/matches/live/${this.state.userLiveMatch.id}`)})
+      history.push(`/matches/live/${userLiveMatch.data.id}`)
     })
   }
 
   //this will currently change all the subscribers 
 
-  updateScoreActionCable = (data) => {
-    const newArray = this.state.matches.filter(match => match.id !== data.id)
+  updateScoreActionCable = (match) => {
+    const newArray = this.state.matches.filter(m => m.id !== match.data.id)
     // const newUserLiveMatch = this.state.userLiveMatch ? (data.id === this.state.userLiveMatch.id) ? data : this.state.userLiveMatch
-    this.setState({userLiveMatch: data, matches: [...newArray, data]})
+    this.setState({matches: [...newArray, match.data]})
   }
 
-  updateUserLiveMatch = (userLiveMatch) => {
-    this.setState({userLiveMatch})
-  }
-
-  updateScore = (user_score, opponent_score, match, live) => {
+  updateScore = (user_score, opponent_score, match) => {
     const updatedMatch = {...match, user_score: user_score, opponent_score: opponent_score}
-    API.updateMatch(updatedMatch)
-    .then(userLiveMatch => this.setState({userLiveMatch}))
+    API.updateMatch(updatedMatch, updatedMatch.id)
   }
 
-  finishMatch = (match) => {
+  finishMatch = (match, id) => {
     const updatedMatch = {...match, live: false}
-    API.updateMatch(updatedMatch)
+    API.updateMatch(updatedMatch, id)
     .then(userLiveMatch => this.setState({userLiveMatch}))
   }
 
-  matchOpponent = (match) => match.opponent_id ? this.state.users.filter(user => user.id === match.opponent_id) : match.opponent_name
-  matchUser = (match) => this.state.users.filter(user => user.id === match.user_id)
+  matchOpponent = (match) => match.opponent_id ? this.state.users.filter(user => user.id === match.attirbutes.opponent_id) : match.attributes.opponent_name
+  matchUser = (match) => this.state.users.filter(user => user.id === match.attributes.user.id)
 
   render() {
 
     const LazyComponent = (condition, component) => condition ? component : <Loading />
     const currentUser = this.state.currentUser
-    const matchOpponents = this.state.userMatches.map(match => this.matchOpponent(match))
-    const matchUsers = this.state.userMatches.map(match => this.matchUser(match))
-    const userMatches = this.state.userMatches.sort((a, b) => b.id - a.id)
+    const userMatches = this.state.matches ? this.state.matches.filter(match => match.attributes.user.id === currentUser.id) : null
     const userLiveMatch = this.state.userLiveMatch
     const following = this.state.following
     const followers = this.state.followers
-    const liveMatches = this.state.matches.filter(match => match.live === true)
-    const liveMatchOpponents = liveMatches.map(match => this.matchOpponent(match))
-    const liveMatchUsers = liveMatches.map(match => this.matchUser(match))
+    const allLiveMatches = this.state.matches ? this.state.matches.filter(match => match.attributes.live === true) : null
+    const liveMatches = allLiveMatches.sort((a, b) => b.id - a.id)
     const allUsers = this.state.users
+
 
   return (
 
@@ -147,10 +144,10 @@ class App extends React.Component {
         <Route exact path='/home' render={props => LazyComponent(currentUser, <Home {...props} currentUser={currentUser} />)} />
         <Route exact path='/matches' render={props => <Match {...props} currentUser={currentUser} createMatch={this.createMatch}/>} />
         <Route exact path='/social' render={props => <Social {...props} following={following} followers={followers} unfollow={this.unfollow} follow={this.follow} currentUser={currentUser} />} />
-        <Route exact path='/matches/new' render={props => <NewMatch {...props} match={userLiveMatch} createMatch={this.createMatch}/> } />        
-        <Route exact path='/matches/all' render={props => LazyComponent((userMatches && allUsers), <MatchList {...props} matches={userMatches} users={allUsers}/>)} />
+        <Route exact path='/matches/new' render={props => <NewMatch {...props} match={userLiveMatch} createMatch={this.createMatch} sports={this.state.sports}/> } />        
+        <Route exact path='/matches/all' render={props => LazyComponent(((userMatches.length > 0) && allUsers), <MatchList {...props} matches={userMatches} users={allUsers}/>)} />
         <Route exact path='/matches/live' render={props => LazyComponent((liveMatches && allUsers), <MatchList {...props} matches={liveMatches} users={allUsers}/> )} />
-        <Route exact path='/matches/live/:id' render={props => <LiveMatch {...props} updateScore={this.updateScore} setMatch={this.updateUserLiveMatch} users={this.state.users} matches={this.state.matches} userLiveMatch={userLiveMatch} currentUser={currentUser} finishMatch={this.finishMatch}/> } />
+        <Route exact path='/matches/live/:id' render={props => <LiveMatch {...props} updateScore={this.updateScore} sports={this.state.sports} setMatch={this.updateUserLiveMatch} users={this.state.users} matches={this.state.matches} userLiveMatch={userLiveMatch} currentUser={currentUser} finishMatch={this.finishMatch}/> } />
       </BrowserRouter>
     </div>
   )

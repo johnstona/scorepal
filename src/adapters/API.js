@@ -6,6 +6,9 @@ const USERS_URL = `${BASE_URL}/users`
 const MATCHES_URL = `${BASE_URL}/matches`
 const RELATIONSHIPS_URL = `${BASE_URL}/relationships`
 const LOGIN_URL = `${BASE_URL}/login`
+const SPORTS_URL = `${BASE_URL}/sports`
+const HAPPENED_EVENTS_URL = `${BASE_URL}/happened_events`
+const HAPPENED_SCORE_EVENTS_URL = `${BASE_URL}/happened_score_events`
 
 const fetchData = (url = '', data = {}, method) => {
   return fetch(url, {
@@ -24,6 +27,22 @@ const createSubscription = (callback) => {
     }
   })
 }
+
+const createLiveSubscription = (callback) => {
+  ACTION_CABLE.subscriptions.create('LiveMatchChannel', {
+    received: data => {
+      callback(data)
+    }
+  })
+}
+
+// const createLiveEventsSubscription = (callback) => {
+//   ACTION_CABLE.subscriptions.create('LiveEventsChannel', {
+//     received: data => {
+//       callback(data)
+//     }
+//   })
+// }
 
 const getAllUsers = async () => {
   const res = await fetch(USERS_URL)
@@ -49,8 +68,8 @@ const createMatch = async (newMatch, id) => {
   return res.json()
 }
 
-const updateMatch = async (match) => {
-  const res = await fetchData(`${MATCHES_URL}/${match.id}`, match, 'PATCH')
+const updateMatch = async (match, id) => {
+  const res = await fetchData(`${MATCHES_URL}/${id}`, match, 'PATCH')
   return res.json()
 }
 
@@ -88,6 +107,11 @@ const getUserMatches = async (id) => {
   return res.json()
 }
 
+const getMatch = async (id) => {
+  const res = await fetch(`${MATCHES_URL}/${id}`)
+  return res.json()
+}
+
 const getUserFollowing = async (id) => {
   const res = await fetch(`${USERS_URL}/${id}/following`)
   return res.json()
@@ -100,6 +124,33 @@ const getUserFollowers = async (id) => {
 
 const getAllMatches = async () => {
   const res = await fetch(MATCHES_URL)
+  return res.json()
+}
+
+const getAllSports = async () => {
+  const res = await fetch(SPORTS_URL)
+  return res.json()
+}
+
+const createHappenedMatchEvent = async (matchEventId, matchId, player, playerName) => {
+  const event = {
+    match_event_id: matchEventId,
+    match_id: matchId,
+    player: player,
+    player_name: playerName
+  }
+  const res = await fetchData(HAPPENED_EVENTS_URL, event, 'POST')
+  return res.json()
+}
+
+const createHappenedScoreEvent = async (scoreEventId, matchId, player, playerName) => {
+  const event = {
+    score_event_id: scoreEventId,
+    match_id: matchId,
+    player: player,
+    player_name: playerName
+  }
+  const res = await fetchData(HAPPENED_SCORE_EVENTS_URL, event, 'POST')
   return res.json()
 }
 
@@ -116,5 +167,10 @@ export default {
   getUserFollowing,
   getAllMatches,
   unfollow,
-  getUserFollowers
+  getUserFollowers,
+  createLiveSubscription,
+  getMatch,
+  getAllSports,
+  createHappenedMatchEvent,
+  createHappenedScoreEvent
 }

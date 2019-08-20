@@ -1,8 +1,8 @@
 import React from 'react'
-import { Header, Button, Grid, Icon, Segment, Form } from 'semantic-ui-react'
+import { Header, Button, Grid, Icon, Segment, Form, Dropdown } from 'semantic-ui-react'
 import { useForm } from '../../Hooks'
 
-const NewMatch = ({ history, match, createMatch }) => {
+const NewMatch = ({ history, match, createMatch, sports }) => {
   const newMatch = () => {
     createMatch(input, history)
   }
@@ -16,7 +16,11 @@ const NewMatch = ({ history, match, createMatch }) => {
     live: true
   }
 
-  const { input, handleChange, handleSubmit } = useForm(newMatch, initialValues)
+  const sportOptions = sports && sports.map(sport => {
+    return { key: sport.id, value: sport.attributes.name, text: sport.attributes.name }
+  })
+
+  const { input, handleChange, handleSubmit, handleDropdownChange } = useForm(newMatch, initialValues)
 
   return <>
     <Header as='h2' block textAlign='center' color='olive'>New Match</Header>
@@ -27,13 +31,12 @@ const NewMatch = ({ history, match, createMatch }) => {
         </Header>
         <Form size='large'>
           <Segment stacked>
-            <Form.Input onChange={handleChange}
-              fluid
-              icon='futbol'
+            <Dropdown onChange={handleDropdownChange}
               name='sport'
-              value={input.sport}
-              iconPosition='left'
-              placeholder='Which sport?' />
+              placeholder='Select Sport'
+              fluid
+              selection
+              options={sportOptions} />
             <Form.Input
               fluid
               name='opponent_name'
