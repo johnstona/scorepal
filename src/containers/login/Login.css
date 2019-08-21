@@ -1,0 +1,20 @@
+.ui.grid {
+  margin: 0px;
+}
+
+.ui.grid>.column:not(.row) {
+  padding: 0px;
+}
+
+.ui.message {
+  width: 80%;
+  display: inline-block;
+  background-color: papayawhip;
+  box-shadow: 0 0 2px 2px rgb(203, 155, 155);
+}
+
+.ui.center.aligned.header {
+  width: 80%;
+  font-size: 19px;
+  display: inline-block;
+}

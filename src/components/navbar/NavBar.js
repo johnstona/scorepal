@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
-import { Menu, Dropdown } from 'semantic-ui-react'
+import { Menu, Dropdown, Icon } from 'semantic-ui-react'
 import './NavBar.css'
+import styled from 'styled-components'
 
-const NavBar = ({ history }) => {
+const NavBar = () => {
   const [active, setActive] = useState()
   const [redirect, toggleRedirect] = useState(false)
   const [url, setUrl] = useState()
@@ -22,8 +23,8 @@ const NavBar = ({ history }) => {
   return (<>
     <Menu className='navbar'>
 
-      <Menu.Item name='scorepal' active={active === 'scorepal'} onClick={handleClick}>
-          ScorePalLogoHere
+      <Menu.Item name='scorepal' active={active === 'scorepal'} onClick={() => handleDropdown('home')}>
+          SC<Icon className='futbol ball'/>REPAL
       </Menu.Item>
 
       <Menu.Menu position='right'>
@@ -32,7 +33,7 @@ const NavBar = ({ history }) => {
             <Dropdown.Item value='home' key='home' onClick={() => handleDropdown('home')}>Home</Dropdown.Item>
             <Dropdown.Item value='matches' key='matches' onClick={() => handleDropdown('matches')}>Matches</Dropdown.Item>
             <Dropdown.Item value='social' onClick={() => handleDropdown('social')}>Social</Dropdown.Item>
-            <Dropdown.Item value='logout' onClick={() => handleDropdown('logout')}>Logout</Dropdown.Item>
+            <Dropdown.Item value='logout' onClick={() => handleDropdown('')}>Logout</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </Menu.Menu>

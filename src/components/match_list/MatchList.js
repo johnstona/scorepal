@@ -1,6 +1,23 @@
 import React, { useState } from 'react'
-import { Grid, Segment, Divider, Container, Label, Button, Dropdown } from 'semantic-ui-react'
+import { Grid, Segment, Divider, Container, Label, Dropdown } from 'semantic-ui-react'
 import BackButton from '../back_button/BackButton'
+import styled from 'styled-components'
+import './MatchList.css'
+
+const WatchButton = styled.button`
+  border: none;
+  padding: 10px 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 8px;
+  width: 100%;
+  color: white;
+  background-color: #27ab6c;
+    `;
 
 const MatchList = ({ matches, users, history }) => {
   const [selection, changeSelection] = useState('')
@@ -14,7 +31,7 @@ const MatchList = ({ matches, users, history }) => {
     changeSelection(value)
   }
 
-  return <>
+  return <Container textAlign='center'>
     <Dropdown onChange={handleChange}
       placeholder='Select Sport'
       fluid
@@ -40,7 +57,7 @@ const MatchList = ({ matches, users, history }) => {
               <Label circular color='green' size='huge'>{match.attributes.user_score}</Label>
             </Grid.Column>
             <Grid.Column>
-              <Button circular color='pink' size='huge' onClick={() => history.push(`/matches/live/${match.id}`)}>{match.attributes.live ? 'Watch!' : 'See result'}</Button>
+              <WatchButton onClick={() => history.push(`/matches/live/${match.id}`)}>{match.attributes.live ? 'Watch!' : 'Result'}</WatchButton>
             </Grid.Column>
             <Grid.Column textAlign='center'>
               <Label circular color='green' size='huge'>{match.attributes.opponent_score}
@@ -54,7 +71,7 @@ const MatchList = ({ matches, users, history }) => {
     <Container textAlign='center'>
       <BackButton history={history} />
     </Container>
-  </>
+  </Container>
 }
 
 export default MatchList

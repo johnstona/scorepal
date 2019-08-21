@@ -1,7 +1,6 @@
 import React from 'react'
-import { Image, Container, Divider, Card, Segment, Header } from 'semantic-ui-react'
+import { Image, Container, Divider, Card } from 'semantic-ui-react'
 import { importAll } from '../../functions/CustomFunctions'
-import HomeButtons from '../../components/home_buttons/HomeButtons'
 
 const Profile = ({ currentUser }) => {
   return <Container textAlign='center'>

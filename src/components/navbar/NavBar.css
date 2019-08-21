@@ -1,4 +1,41 @@
-.navbar {
+.ui.navbar.menu {
   height: 4rem;
-  background: #2ec4a0
+  background-color:rgb(75, 174, 204);
+  font-family: 'Martel Sans Bold', sans-serif;
+  font-size: 17px;
+  border-radius: 0px;
+  color: white;
+}
+
+.ui.menu .item {
+  color: white;
+}
+
+.ui.menu .dropdown.item:hover {
+  color: white;
+}
+
+i.icon.futbol:before {
+  color: #5a1565;
+}
+
+.ui.menu .ui.dropdown .menu>.item {
+  margin: 0;
+  text-align: left;
+  font-size: 1em!important;
+  padding: .78571429em .74285714em!important;
+  background:  rgb(75, 174, 204)!important;
+  color: white!important;
+  text-transform: none!important;
+  font-weight: 400!important;
+  -webkit-box-shadow: none!important;
+  box-shadow: none!important;
+  -webkit-transition: none!important;
+  transition: none!important;
+}
+
+.ui.menu .item>i.icon {
+  opacity: .9;
+  float: none;
+  margin: 0px;
 }

@@ -1,6 +1,43 @@
 import React from 'react'
-import { Header, Button, Grid, Icon, Segment, Form, Dropdown } from 'semantic-ui-react'
+import { Header, Grid, Icon, Dropdown, Container } from 'semantic-ui-react'
 import { useForm } from '../../Hooks'
+
+import styled from 'styled-components'
+
+const Input = styled.input`
+  padding: 0.5em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  color: rgb(138, 40, 40);
+  background: papayawhip;
+  border: none;
+  border-radius: 3px;
+  width: 80%;
+  box-shadow: 0 0 2px 2px rgb(203, 155, 155);
+`;
+
+const Form = styled.form``
+
+const Segment = styled.div``
+
+const Button = styled.button`
+  border: none;
+  padding: 10px 34px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin: 0.5em;
+  cursor: pointer;
+  border-radius: 8px;
+  width: 80%;
+  color: white;
+  box-shadow: 0 0 1px 1px #888;
+    `;
+
+const NewMatchButton = styled(Button)`
+    background-color: rgb(75, 174, 204);
+  `;
 
 const NewMatch = ({ history, match, createMatch, sports }) => {
   const newMatch = () => {
@@ -22,10 +59,9 @@ const NewMatch = ({ history, match, createMatch, sports }) => {
 
   const { input, handleChange, handleSubmit, handleDropdownChange } = useForm(newMatch, initialValues)
 
-  return <>
-    <Header as='h2' block textAlign='center' color='olive'>New Match</Header>
+  return <Container textAlign='center'>
     <Grid textAlign='center' style={{ height: '50vh' }} verticalAlign='middle'>
-      <Grid.Column style={{ maxWidth: 450 }}>
+      <Grid.Column style={{ maxWidth: '100vw' }}>
         <Header as='h2' color='green' textAlign='center'>
           <Icon className='futbol ball' /> Make a new match!
         </Header>
@@ -37,7 +73,7 @@ const NewMatch = ({ history, match, createMatch, sports }) => {
               fluid
               selection
               options={sportOptions} />
-            <Form.Input
+            <Input
               fluid
               name='opponent_name'
               onChange={handleChange}
@@ -46,7 +82,7 @@ const NewMatch = ({ history, match, createMatch, sports }) => {
               iconPosition='left'
               placeholder='Opponent name'
             />
-            <Form.Input
+            <Input
               fluid
               name='opponent_username'
               onChange={handleChange}
@@ -55,14 +91,14 @@ const NewMatch = ({ history, match, createMatch, sports }) => {
               iconPosition='left'
               placeholder='or opponent username'
             />
-            <Button onClick={handleSubmit} color='green' fluid size='large'>
+            <NewMatchButton onClick={handleSubmit}>
             Start match!
-            </Button>
+            </NewMatchButton>
           </Segment>
         </Form>
       </Grid.Column>
     </Grid>
-        </>
+        </Container>
 }
 
 export default NewMatch
