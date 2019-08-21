@@ -2,7 +2,7 @@ import ActionCable from 'actioncable'
 
 let BASE_URL = ''
 
-if (window.location.href.includes('heroku')) {
+if (window.location.href.includes('netlify')) {
   BASE_URL = 'https://scorepal.herokuapp.com';
 } else {
   BASE_URL = 'http://localhost:3000'
