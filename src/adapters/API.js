@@ -1,7 +1,14 @@
 import ActionCable from 'actioncable'
 
-const ACTION_CABLE = ActionCable.createConsumer('ws://localhost:3000/cable')
-const BASE_URL = 'http://localhost:3000'
+let BASE_URL = ''
+
+if (window.location.href.includes('heroku')) {
+  BASE_URL = 'https://scorepal.herokuapp.com';
+} else {
+  BASE_URL = 'http://localhost:3000'
+}
+
+const ACTION_CABLE = ActionCable.createConsumer('ws://scorepal.herokuapp.com/cable')
 const USERS_URL = `${BASE_URL}/users`
 const MATCHES_URL = `${BASE_URL}/matches`
 const RELATIONSHIPS_URL = `${BASE_URL}/relationships`
