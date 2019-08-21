@@ -10,3 +10,10 @@
 .ui.grid>.row {
   padding: 5px 0px;
 }
+
+.score-row {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}

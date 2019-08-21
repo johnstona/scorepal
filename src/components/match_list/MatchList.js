@@ -14,10 +14,10 @@ const WatchButton = styled.button`
   margin: 4px 2px;
   cursor: pointer;
   border-radius: 8px;
-  width: 100%;
+  width: 30%;
   color: white;
   background-color: #27ab6c;
-    `;
+    `
 
 const MatchList = ({ matches, users, history }) => {
   const [selection, changeSelection] = useState('')
@@ -52,17 +52,12 @@ const MatchList = ({ matches, users, history }) => {
 
             </Grid.Column>
           </Grid.Row>
-          <Grid.Row centered columns={3}>
-            <Grid.Column textAlign='center'>
+          <Grid.Row >
+            <div className='score-row'>
               <Label circular color='green' size='huge'>{match.attributes.user_score}</Label>
-            </Grid.Column>
-            <Grid.Column>
               <WatchButton onClick={() => history.push(`/matches/live/${match.id}`)}>{match.attributes.live ? 'Watch!' : 'Result'}</WatchButton>
-            </Grid.Column>
-            <Grid.Column textAlign='center'>
-              <Label circular color='green' size='huge'>{match.attributes.opponent_score}
-              </Label>
-            </Grid.Column>
+              <Label circular color='green' size='huge'>{match.attributes.opponent_score}</Label>
+            </div>
           </Grid.Row>
         </Grid>
       })}

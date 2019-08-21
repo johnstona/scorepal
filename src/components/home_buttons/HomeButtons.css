@@ -1,21 +1,5 @@
-.button {
-  border: none;
-  padding: 10px 34px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 20px;
-  margin: 7px;
-  cursor: pointer;
-  border-radius: 8px;
-  width: 100%;
-  color: white;
-}
-
-.match.button {
-  background-color: rgb(75, 174, 204);
-}
-
-.social.button {
-  background-color: #9882b8
+.buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }

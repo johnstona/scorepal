@@ -39,13 +39,13 @@ const NewMatchButton = styled(Button)`
     background-color: rgb(75, 174, 204);
   `;
 
-const NewMatch = ({ history, match, createMatch, sports }) => {
+const NewMatch = ({ history, createMatch, sports }) => {
   const newMatch = () => {
     createMatch(input, history)
   }
 
   const initialValues = {
-    sport: '',
+    sport: 'football',
     user_score: 0,
     opponent_score: 0,
     opponent_name: '',

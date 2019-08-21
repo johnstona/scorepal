@@ -1,7 +1,8 @@
 import React from 'react'
-import { Button, Container, Divider } from 'semantic-ui-react'
+import { Button, Container } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import './HomeButtons.css'
 
 const button = styled.button`
   border: none;
@@ -26,7 +27,7 @@ const SocialButton = styled(button)`
   `;
 
 const HomeButtons = () => {
-  return <Container textAlign='center'>
+  return <div className='buttons'>
     <Button.Group vertical>
       <Link to='/matches'>
         <MatchButton>Matches</MatchButton>
@@ -35,7 +36,7 @@ const HomeButtons = () => {
         <SocialButton>Social</SocialButton>
       </Link>
     </Button.Group>
-  </Container>
+  </div>
 }
 
 export default HomeButtons
