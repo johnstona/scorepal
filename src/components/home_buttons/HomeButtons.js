@@ -1,15 +1,39 @@
 import React from 'react'
 import { Button, Container, Divider } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
+import styled from 'styled-components'
+
+const button = styled.button`
+  border: none;
+  padding: 20px 34px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 8px;
+  width: 100%;
+  color: white;
+    `;
+
+const MatchButton = styled(button)`
+  background-color: rgb(75, 174, 204);
+`;
+
+const SocialButton = styled(button)`
+  background-color: #9882b8
+  `;
 
 const HomeButtons = () => {
   return <Container textAlign='center'>
-    <Divider hidden />
-    <Divider hidden />
-    <Divider hidden />
     <Button.Group vertical>
-      <Button size='massive' to='/matches' as={Link} color='orange'>Matches</Button>
-      <Button size='massive' to='/social' as={Link} color='pink'>Social</Button>
+      <Link to='/matches'>
+        <MatchButton>Matches</MatchButton>
+      </Link>
+      <Link to='/social'>
+        <SocialButton>Social</SocialButton>
+      </Link>
     </Button.Group>
   </Container>
 }

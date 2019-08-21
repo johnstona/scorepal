@@ -19,20 +19,15 @@ const MatchScore = ({ match, player1, player2 }) => {
       </Grid.Column>
       </Grid.Row>
       <Grid.Row centered columns={2}>
-        <Grid.Column>
-
-          <Segment textAlign='center'>
+        <Grid.Column textAlign='center'>
             <Label circular color='green' size='massive'>
               {match.user_score}
             </Label>
-          </Segment>
         </Grid.Column>
-        <Grid.Column>
-          <Segment textAlign='center'>
+        <Grid.Column textAlign='center'>
             <Label circular color='green' size='massive'>
               {match.opponent_score}
             </Label>
-          </Segment>
         </Grid.Column>
       </Grid.Row>
     </Grid>

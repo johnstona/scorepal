@@ -1,17 +1,17 @@
 import React from 'react'
 import MatchButtons from '../../components/match_buttons/MatchButtons'
-import { Divider, Header } from 'semantic-ui-react'
+import { Grid, Header } from 'semantic-ui-react'
 import Profile from '../profile/Profile'
+import './Match.css'
 
 const Match = ({ currentUser, createMatch }) => {
-  return <div>
-    <Header as='h3' inverted color='green' textAlign='center'>
+  return <Grid textAlign='center'>
+    <Header as='h3' textAlign='center'>
       MATCH HOME
     </Header>
     <Profile currentUser={currentUser} />
-    <Divider hidden />
     <MatchButtons newMatch={createMatch} />
-  </div>
+  </Grid>
 }
 
 export default Match

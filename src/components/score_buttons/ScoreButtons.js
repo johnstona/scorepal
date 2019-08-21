@@ -1,6 +1,38 @@
 import React, { useState } from 'react'
 import { Button, Grid, Container, Divider, Modal, Input } from 'semantic-ui-react'
 import './ScoreButtons.css'
+import styled from 'styled-components'
+
+const button = styled.button`
+  border: none;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 8px;
+  width: 100%;
+  color: white;
+    `;
+
+const ScoreEventButton = styled(button)`
+  background-color: rgb(75, 174, 204);
+`;
+
+const MatchEventButton = styled(button)`
+  background-color: #9882b8
+  `;
+
+const ConfirmPlayerButton = styled(button)`
+background-color: #9882b8;
+display: inline;
+width: 180px;
+`;
+
+const CompleteMatchButton = styled(button)`
+background-color: #9882b8;`
 
 const ScoreButtons = ({ updateScore, finish, match, sport, newMatchEvent, newScoreEvent, player1, player2 }) => {
   const [player1ScoreModalOpen, toggleplayer1ScoreModalOpen] = useState(false)
@@ -97,55 +129,55 @@ const ScoreButtons = ({ updateScore, finish, match, sport, newMatchEvent, newSco
       <Grid.Column>
         <Button.Group vertical>
           {scoreEvents.map(scoreEvent =>
-            <Button className='Button-bordered' size='huge' color='blue' onClick={!scoreEvent.player_option ? () => handlePlayer1ScoreClick(scoreEvent) : () => updateScore(scoreEvent.point_value, 0)}>{scoreEvent.name}</Button>
+            <ScoreEventButton className='Button-bordered' size='huge' color='blue' onClick={!scoreEvent.player_option ? () => handlePlayer1ScoreClick(scoreEvent) : () => updateScore(scoreEvent.point_value, 0)}>{scoreEvent.name}</ScoreEventButton>
           )}
         </Button.Group>
         <Button.Group vertical>
           {matchEvents.map(matchEvent =>
-            <Button className='Button-bordered' size='huge' color='green' onClick={!matchEvent.player_option ? () => handlePlayer1MatchClick(matchEvent) : () => newMatchEvent(matchEvent, player1Name)}>{matchEvent.name}</Button>
+            <MatchEventButton className='Button-bordered' size='huge' color='green' onClick={!matchEvent.player_option ? () => handlePlayer1MatchClick(matchEvent) : () => newMatchEvent(matchEvent, player1Name)}>{matchEvent.name}</MatchEventButton>
           )}
         </Button.Group>
       </Grid.Column>
       <Grid.Column>
         <Button.Group vertical>
           {scoreEvents.map(scoreEvent =>
-            <Button circular size='huge' color='blue' onClick={!scoreEvent.player_option ? () => handlePlayer2ScoreClick(scoreEvent) : () => updateScore(0, scoreEvent.point_value)}>{scoreEvent.name}</Button>
+            <ScoreEventButton circular size='huge' color='blue' onClick={!scoreEvent.player_option ? () => handlePlayer2ScoreClick(scoreEvent) : () => updateScore(0, scoreEvent.point_value)}>{scoreEvent.name}</ScoreEventButton>
           )}
         </Button.Group>
         <Button.Group vertical>
           {matchEvents.map(matchEvent =>
-            <Button className='Button-bordered' size='huge' color='green' onClick={!matchEvent.player_option ? () => handlePlayer2MatchClick(matchEvent) : () => newMatchEvent(matchEvent, player1Name)}>{matchEvent.name}</Button>
+            <MatchEventButton className='Button-bordered' size='huge' color='green' onClick={!matchEvent.player_option ? () => handlePlayer2MatchClick(matchEvent) : () => newMatchEvent(matchEvent, player1Name)}>{matchEvent.name}</MatchEventButton>
           )}
         </Button.Group>
       </Grid.Column>
     </Grid>
     <Divider hidden />
     <Modal open={player1ScoreModalOpen} onClose={player1ScoreModalClose}>
-      <Modal.Content>
-        <Input onChange={player1ScoreModalChange} value={player1ScoreModalInput} />
-        <Button onClick={() => createScoreEvent(player1ScoreModalEvent, player1Name, player1ScoreModalInput)}>Confirm Player</Button>
+      <Modal.Content >
+        <Input placeholder='Player name...' onChange={player1ScoreModalChange} value={player1ScoreModalInput} />
+        <ConfirmPlayerButton onClick={() => createScoreEvent(player1ScoreModalEvent, player1Name, player1ScoreModalInput)}>Confirm Event</ConfirmPlayerButton>
       </Modal.Content>
     </Modal>
     <Modal open={player2ScoreModalOpen} onClose={player2ScoreModalClose}>
       <Modal.Content>
         <Input onChange={player2ScoreModalChange} value={player2ScoreModalInput} />
-        <Button onClick={() => createScoreEvent(player2ScoreModalEvent, player2Name, player2ScoreModalInput)}>Confirm Player</Button>
+        <ConfirmPlayerButton onClick={() => createScoreEvent(player2ScoreModalEvent, player2Name, player2ScoreModalInput)}>Confirm Event</ConfirmPlayerButton>
       </Modal.Content>
     </Modal>
     <Modal open={player1MatchModalOpen} onClose={player1MatchModalClose}>
       <Modal.Content>
         <Input onChange={player1MatchModalChange} value={player1MatchModalInput} />
-        <Button onClick={() => createMatchEvent(player1MatchModalEvent, player1Name, player1MatchModalInput)}>Confirm Player</Button>
+        <ConfirmPlayerButton onClick={() => createMatchEvent(player1MatchModalEvent, player1Name, player1MatchModalInput)}>Confirm Event</ConfirmPlayerButton>
       </Modal.Content>
     </Modal>
     <Modal open={player2MatchModalOpen} onClose={player2MatchModalClose}>
       <Modal.Content>
         <Input onChange={player2MatchModalChange} value={player2MatchModalInput} />
-        <Button onClick={() => createMatchEvent(player2MatchModalEvent, player2Name, player2MatchModalInput)}>Confirm Player</Button>
+        <ConfirmPlayerButton onClick={() => createMatchEvent(player2MatchModalEvent, player2Name, player2MatchModalInput)}>Confirm Event</ConfirmPlayerButton>
       </Modal.Content>
     </Modal>
     <Container textAlign='center'>
-      <Button size='massive' color='red' onClick={() => finish(match)}>Complete Match</Button>
+      <CompleteMatchButton size='massive' color='red' onClick={() => finish(match)}>Complete Match</CompleteMatchButton>
     </Container>
           </>
 }

@@ -34,7 +34,6 @@ const LiveMatch = ({ currentUser, updateScore, match, users, finishMatch, sports
   const updateMatch = (data) => {
     if (data.data.id !== match.params.id) return
     setCurrentMatch(data)
-    console.log(data)
   }
 
   const newMatchEvent = (matchEvent, player, playerName) => {
@@ -58,7 +57,7 @@ const LiveMatch = ({ currentUser, updateScore, match, users, finishMatch, sports
   // MatchCompleted ? render - this match is no longer live
   // userMatch ? render matchcontrolbuttons : render live updates
 
-  return <>
+  return <Container textAlign='center'>
     <Container >
       {LazyComponent((userLiveMatch && player1 && player2), <MatchScore match={userLiveMatch} player1={player1} player2={player2} />)}
     </Container>
@@ -68,7 +67,7 @@ const LiveMatch = ({ currentUser, updateScore, match, users, finishMatch, sports
         {userMatch ? LazyComponent(sport && player1 && player2, <ScoreButtons updateScore={updateScoreLive} finish={finish} match={userLiveMatch} newMatchEvent={newMatchEvent} newScoreEvent={newScoreEvent} sport={sport} player1={player1} player2={player2} />) : <MatchEvents match={userLiveMatch} />}
       </Container>
     ) : <MatchEvents match={userLiveMatch} finished />) : <Loading />}
-      </>
+      </Container>
 }
 
 export default LiveMatch

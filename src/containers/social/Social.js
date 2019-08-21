@@ -7,7 +7,7 @@ const Social = ({ following, unfollow, follow, history, followers, currentUser }
   const followingIds = following.map(f => f.id)
   const alreadyFollowed = followingIds.filter(id => followerIds.includes(id))
 
-  return <>
+  return <Container textAlign='center'>
     <Header textAlign='center'>FOLLOWING</Header>
     <Grid textAlign='center'>
       {following.map(user => {
@@ -42,7 +42,7 @@ const Social = ({ following, unfollow, follow, history, followers, currentUser }
     <Container textAlign='center'>
         <BackButton textAlign='center' history={history} />
       </Container>
-  </>
+  </Container>
 }
 
 export default Social

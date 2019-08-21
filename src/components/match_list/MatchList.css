@@ -1,0 +1,12 @@
+.ui.container {
+    width: auto!important;
+    margin: 0!important;
+}
+
+.ui.grid>* {
+  padding: 0;
+}
+
+.ui.grid>.row {
+  padding: 5px 0px;
+}

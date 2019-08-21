@@ -6,7 +6,8 @@ const button = {
   display: 'inline-block',
   fontSize: '20px',
   margin: '4px 2px',
-  cursor: 'pointer'
+  cursor: 'pointer',
+  borderRadius: '8px'
   }
 
   export default {
