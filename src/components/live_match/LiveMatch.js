@@ -8,7 +8,7 @@ import MatchEvents from '../match_events/MatchEvents'
 
 // NB match in this component is the 'match' from props
 
-const LiveMatch = ({ currentUser, updateScore, match, users, finishMatch, sports }) => {
+const LiveMatch = ({ currentUser, updateScore, match, users, finishMatch, sports, follow }) => {
   const [liveMatch, setCurrentMatch] = useState()
 
   const LazyComponent = (condition, component) => condition ? component : <Loading />
@@ -53,13 +53,18 @@ const LiveMatch = ({ currentUser, updateScore, match, users, finishMatch, sports
     API.createLiveSubscription(updateMatch)
   }, [match.params.id])
 
+  const addFriend = (player) => {
+    let user = users.find(user => user.id === player.id)
+    follow(currentUser, user)
+  }
+
   // Match Score component should be rendered for the match
   // MatchCompleted ? render - this match is no longer live
   // userMatch ? render matchcontrolbuttons : render live updates
 
   return <Container textAlign='center'>
     <Container >
-      {LazyComponent((userLiveMatch && player1 && player2), <MatchScore match={userLiveMatch} player1={player1} player2={player2} />)}
+      {LazyComponent((userLiveMatch && player1 && player2), <MatchScore match={userLiveMatch} player1={player1} player2={player2} addFriend={addFriend} />)}
     </Container>
     <Divider />
     {(userLiveMatch) ? (userLiveMatch.live ? (
@@ -67,7 +72,7 @@ const LiveMatch = ({ currentUser, updateScore, match, users, finishMatch, sports
         {userMatch ? LazyComponent(sport && player1 && player2, <ScoreButtons updateScore={updateScoreLive} finish={finish} match={userLiveMatch} newMatchEvent={newMatchEvent} newScoreEvent={newScoreEvent} sport={sport} player1={player1} player2={player2} />) : <MatchEvents match={userLiveMatch} />}
       </Container>
     ) : <MatchEvents match={userLiveMatch} finished />) : <Loading />}
-      </Container>
+  </Container>
 }
 
 export default LiveMatch

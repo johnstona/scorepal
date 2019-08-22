@@ -154,25 +154,25 @@ const ScoreButtons = ({ updateScore, finish, match, sport, newMatchEvent, newSco
     <Divider hidden />
     <Modal open={player1ScoreModalOpen} onClose={player1ScoreModalClose}>
       <Modal.Content >
-        <Input placeholder='Player name...' onChange={player1ScoreModalChange} value={player1ScoreModalInput} />
+        <Input placeholder='Enter info about the score...' onChange={player1ScoreModalChange} value={player1ScoreModalInput} />
         <ConfirmPlayerButton onClick={() => createScoreEvent(player1ScoreModalEvent, player1Name, player1ScoreModalInput)}>Confirm Event</ConfirmPlayerButton>
       </Modal.Content>
     </Modal>
     <Modal open={player2ScoreModalOpen} onClose={player2ScoreModalClose}>
       <Modal.Content>
-        <Input onChange={player2ScoreModalChange} value={player2ScoreModalInput} />
+        <Input placeholder='Enter info about the score...' onChange={player2ScoreModalChange} value={player2ScoreModalInput} />
         <ConfirmPlayerButton onClick={() => createScoreEvent(player2ScoreModalEvent, player2Name, player2ScoreModalInput)}>Confirm Event</ConfirmPlayerButton>
       </Modal.Content>
     </Modal>
     <Modal open={player1MatchModalOpen} onClose={player1MatchModalClose}>
       <Modal.Content>
-        <Input onChange={player1MatchModalChange} value={player1MatchModalInput} />
+        <Input placeholder='What just happened?' onChange={player1MatchModalChange} value={player1MatchModalInput} />
         <ConfirmPlayerButton onClick={() => createMatchEvent(player1MatchModalEvent, player1Name, player1MatchModalInput)}>Confirm Event</ConfirmPlayerButton>
       </Modal.Content>
     </Modal>
     <Modal open={player2MatchModalOpen} onClose={player2MatchModalClose}>
       <Modal.Content>
-        <Input onChange={player2MatchModalChange} value={player2MatchModalInput} />
+        <Input placeholder='What just happened?' onChange={player2MatchModalChange} value={player2MatchModalInput} />
         <ConfirmPlayerButton onClick={() => createMatchEvent(player2MatchModalEvent, player2Name, player2MatchModalInput)}>Confirm Event</ConfirmPlayerButton>
       </Modal.Content>
     </Modal>

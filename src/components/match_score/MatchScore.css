@@ -1,0 +1,7 @@
+.playerName {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Lexend Deca', sans-serif;
+  color: #4d84f1;
+  font-size: 20px;
+}

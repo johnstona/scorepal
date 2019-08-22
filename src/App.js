@@ -161,7 +161,7 @@ class App extends React.Component {
         <Route exact path='/matches/new' render={props => <NewMatch {...props} match={userLiveMatch} createMatch={this.createMatch} sports={this.state.sports}/> } />        
         <Route exact path='/matches/all' render={props => LazyComponent((userMatches && allUsers), <MatchList {...props} matches={userMatches} users={allUsers}/>)} />
         <Route exact path='/matches/live' render={props => LazyComponent((liveMatches && allUsers), <MatchList {...props} matches={liveMatches} users={allUsers}/> )} />
-        <Route exact path='/matches/live/:id' render={props => <LiveMatch {...props} updateScore={this.updateScore} sports={this.state.sports} setMatch={this.updateUserLiveMatch} users={this.state.users} matches={this.state.matches} userLiveMatch={userLiveMatch} currentUser={currentUser} finishMatch={this.finishMatch}/> } />
+        <Route exact path='/matches/live/:id' render={props => <LiveMatch {...props} follow={this.follow} updateScore={this.updateScore} sports={this.state.sports} setMatch={this.updateUserLiveMatch} users={this.state.users} matches={this.state.matches} userLiveMatch={userLiveMatch} currentUser={currentUser} finishMatch={this.finishMatch}/> } />
       </BrowserRouter>
     </div>
   )
