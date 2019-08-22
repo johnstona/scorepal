@@ -2,10 +2,8 @@ import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
 import { Menu, Dropdown, Icon } from 'semantic-ui-react'
 import './NavBar.css'
-import styled from 'styled-components'
 
 const NavBar = () => {
-  const [active, setActive] = useState()
   const [redirect, toggleRedirect] = useState(false)
   const [url, setUrl] = useState()
 
@@ -18,12 +16,10 @@ const NavBar = () => {
     return redirect ? <Redirect to={`/${url}`} /> : null
   }
 
-  const handleClick = (e, { name }) => setActive({ active: name })
-
   return (<>
     <Menu className='navbar'>
 
-      <Menu.Item name='scorepal' active={active === 'scorepal'} onClick={() => handleDropdown('home')}>
+      <Menu.Item name='scorepal' onClick={() => handleDropdown('home')}>
           SC<Icon className='futbol ball'/>REPAL
       </Menu.Item>
 

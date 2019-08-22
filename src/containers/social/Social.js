@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Segment, Header, Grid, Divider, Container } from 'semantic-ui-react'
+import { Segment, Header, Grid, Divider, Container } from 'semantic-ui-react'
 import BackButton from '../../components/back_button/BackButton'
 import styled from 'styled-components'
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Container, Divider } from 'semantic-ui-react'
 import Welcome from '../../components/welcome/Welcome'
 import { Link } from 'react-router-dom'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 const button = styled.button`
   border: none;

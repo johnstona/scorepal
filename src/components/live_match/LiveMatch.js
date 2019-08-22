@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import MatchScore from '../match_score/MatchScore'
 import Loading from '../Loading/Loading'
 import ScoreButtons from '../score_buttons/ScoreButtons'
-import { Container, Divider, Header } from 'semantic-ui-react'
+import { Container, Divider } from 'semantic-ui-react'
 import API from '../../adapters/API'
 import MatchEvents from '../match_events/MatchEvents'
 
