@@ -1,14 +1,19 @@
 import ActionCable from 'actioncable'
 
 let BASE_URL = ''
+let ACTION_CABLE = ''
 
 if (window.location.href.includes('netlify')) {
   BASE_URL = 'https://scorepal.herokuapp.com';
+  ACTION_CABLE = ActionCable.createConsumer('wss://scorepal.herokuapp.com/cable')
 } else {
-  BASE_URL = 'http://localhost:3000'
+  BASE_URL = 'http://localhost:3000';
+  ACTION_CABLE = ActionCable.createConsumer('ws://localhost:3000/cable')
 }
 
-const ACTION_CABLE = ActionCable.createConsumer('wss://scorepal.herokuapp.com/cable')
+
+
+// const ACTION_CABLE = ActionCable.createConsumer('wss://scorepal.herokuapp.com/cable')
 const USERS_URL = `${BASE_URL}/users`
 const MATCHES_URL = `${BASE_URL}/matches`
 const RELATIONSHIPS_URL = `${BASE_URL}/relationships`

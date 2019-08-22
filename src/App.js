@@ -111,10 +111,13 @@ class App extends React.Component {
     })
   } 
 
-  updateScoreActionCable = (match) => {
-    const newArray = this.state.matches.filter(m => m.id !== match.data.id)
-    // const newUserLiveMatch = this.state.userLiveMatch ? (data.id === this.state.userLiveMatch.id) ? data : this.state.userLiveMatch
-    this.setState({matches: [...newArray, match.data]})
+  updateScoreActionCable = (data) => {
+    if (data.data.type === 'user') {
+      this.setState({users: [...this.state.users, data.data.attributes]})
+    } else {
+    const newArray = this.state.matches.filter(m => m.id !== data.data.id)
+    this.setState({matches: [...newArray, data.data]})
+    }
   }
 
   updateScore = (user_score, opponent_score, match) => {
@@ -128,7 +131,7 @@ class App extends React.Component {
     .then(userLiveMatch => this.setState({userLiveMatch}))
   }
 
-  matchOpponent = (match) => match.opponent_id ? this.state.users.filter(user => user.id === match.attirbutes.opponent_id) : match.attributes.opponent_name
+  matchOpponent = (match) => match.opponent_id ? this.state.users.filter(user => user.id === match.attributes.opponent_id) : match.attributes.opponent_name
   matchUser = (match) => this.state.users.filter(user => user.id === match.attributes.user.id)
 
   render() {
