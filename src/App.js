@@ -103,7 +103,11 @@ class App extends React.Component {
     match.sport_id = parseInt(this.state.sports.find(sport => sport.attributes.name === match.sport).id)
     API.createMatch(match, this.state.currentUser.id)
     .then(userLiveMatch => {
+      if (userLiveMatch.data.id) {
       history.push(`/matches/live/${userLiveMatch.data.id}`)
+      } else {
+        alert(userLiveMatch.errors, () => history.push(`/login`))
+      }
     })
   } 
 
