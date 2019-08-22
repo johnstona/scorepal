@@ -16,13 +16,7 @@ import LiveMatch from './components/live_match/LiveMatch';
 
 class App extends React.Component {
   state = {
-    currentUser: {
-      "id": 5,
-      "username": "raccoon991",
-      "name": "Guinea-Bissau",
-      "password": "password",
-      "avatar": "4"
-    },
+    currentUser: {},
     followers: [],
     following: [],
     matches: [],
@@ -97,8 +91,10 @@ class App extends React.Component {
   }
 
   follow = (user1, user2) => {
+    const newArray = this.state.following.filter(user => user.id !== user2.id)
     API.createFollow(user1, user2)
-    .then(() => this.setState({following: [...this.state.following, user2]}))
+    .then(data => alert(data.message))
+    .then(() => this.setState({following: [...newArray, user2]}))
   }
 
   createMatch = (match, history) => {
